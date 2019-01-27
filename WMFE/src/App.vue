@@ -10,7 +10,6 @@
 
 <script>
 export default {
-  // test git
   name: "app",
   components: {}
 };
