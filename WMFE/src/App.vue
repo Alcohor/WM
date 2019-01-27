@@ -1,29 +1,24 @@
 <template>
   <div id="app">
-   
     <main>
       <keep-alive include="app-home">
         <router-view></router-view>
       </keep-alive>
     </main>
-
   </div>
 </template>
 
 <script>
-  
-  
-  export default{
-    name:"app",
-    components:{
-     
-    }
-  }
+export default {
+  // test git
+  name: "app",
+  components: {}
+};
 </script>
 
 <style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
