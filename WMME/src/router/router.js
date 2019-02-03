@@ -8,6 +8,12 @@ export const loginRouter = {
     component: resolve => { require(['@/views/Login'], resolve); },
     meta: { isLogin: false, isAuth: false },
 };
+export const registeRouter = {
+    path: '/registe',
+    name: '注册',
+    component: resolve => { require(['@/views/Registe'], resolve); },
+    meta: { isLogin: false, isAuth: false },
+};
 export const page404Router = {
     path: '*',
     name: '404',
@@ -37,6 +43,7 @@ export const appRouter = [
 //导出
 export const routers = [
     loginRouter,
+    registeRouter,
     ...appRouter,
     page404Router
 ];

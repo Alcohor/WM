@@ -2,8 +2,8 @@ import Vue from 'vue';
 
 //状态
 const state={
-	logoLongName:'Vue ElementUI Admin',//宽菜单LOGO文本
-	logoMiniName:'V',//窄菜单LOGO文本
+	logoLongName:'外卖管理系统',//宽菜单LOGO文本
+	logoMiniName:'WM',//窄菜单LOGO文本
 	collapsed:false,//菜单折叠状态
     sysloading:false//系统加载状态
 }

@@ -13,7 +13,7 @@ const regist = async (req,res,next)=>{
          dataHandler(result,res,'admin')
     }else{
         let result = {
-            status: 201,
+            code: 201,
             data:JSON.stringify('用户名已存在')
         }
         res.render('admin',result)
@@ -31,12 +31,12 @@ const login = async(req,res,next)=>{
                 userid:_judge_result[0]._id,
                 permission:_judge_result[0].permission||1
             }
-            res.render('admin',{status:200,data:JSON.stringify('登录成功')})
+            res.render('admin',{code:200,data:JSON.stringify('登录成功')})
         }else{
-            res.render('admin',{status:201,data:JSON.stringify('密码错误')})
+            res.render('admin',{code:201,data:JSON.stringify('密码错误')})
         }
     }else{
-        res.render('admin',{status:202,data:JSON.stringify('用户名错误')})
+        res.render('admin',{code:202,data:JSON.stringify('用户名错误')})
     }
 }
 

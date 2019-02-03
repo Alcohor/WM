@@ -15,6 +15,8 @@ Vue.use(Vuex)
 Vue.use(ElementUI)
 Vue.use(ECharts)
 
+
+
 Vue.config.productionTip = false
 
 Mock.bootstrap();

@@ -1,8 +1,7 @@
 <!--登录页-->
 <template>
     <el-form :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left" label-width="0px" class="login-container">
-        <h3 class="title text-center">Vue ElementUI Admin</h3>
-        <el-alert style="margin-bottom:10px;" title="帐号admin或guest，密码123456，帐号权限不同!" type="success"></el-alert>
+        <h3 class="title text-center">外卖平台管理系统</h3>
         <el-form-item prop="loginuser">
             <el-input type="text" v-model="loginForm.loginuser" auto-complete="off" placeholder="账号" @keyup.enter.native="loginIn" :autofocus="true"></el-input>
         </el-form-item>

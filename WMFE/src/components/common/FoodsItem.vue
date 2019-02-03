@@ -8,9 +8,7 @@
                 <mark>7.9</mark>
             </div>
         </div>
-       
-        <el-input-number @change = "addGoodsHandler" v-model = "num" :min="0" :max="10" label="描述文字"></el-input-number>
-           
+        <el-input-number size="mini" @change = "addGoodsHandler" v-model = "num" :min="0" :max="10" label="描述文字"></el-input-number>
     </li>
 </template>
 
