@@ -15,14 +15,16 @@ const isSignIn = (req,res,next)=>{
 }
 
 const getInfo= async(req,res,next)=>{
-    let _result = await user_module.getInfo(req.session.userinfo.userid)
+    console.log(req.session, 2983)
+    let _result = await user_module.getInfo(req.session.userinfo.userId)
     
         res.render('user',{
             code:200,
             data:JSON.stringify({
                 userid: _result._id,
-                username: _result.username,
-                nickname: _result.nickname,
+                userName: _result.userName,
+                nickName: _result.nickName,
+                userType: _result.userType
             })
         })
     
@@ -30,9 +32,7 @@ const getInfo= async(req,res,next)=>{
 
 
 const logout=(req,res,next)=>{
-    console.log(req.session.userinfo,1)
     req.session.userinfo = null
-    console.log(req.session.userinfo,2)
     res.render('user', { code: 200, data: JSON.stringify({ msg: '删除成功' }) })
 }
 

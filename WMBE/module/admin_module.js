@@ -4,24 +4,24 @@ const { hash }= require('../utils/hash')
 
 
 var UserModel = mongoose.model('users',new mongoose.Schema({
-    username:String,
-    password:String,
-    nickname:String,
-    permission:Number
+    userName:String,
+    passWord:String,
+    nickName:String,
+    userType:Number
 }))
 
-const regist = async ({username,password,nickname,permission})=>{
-    let _pwd = hash(password);
+const regist = async ({userName,passWord,nickName,userType}) => {
+    let _pwd = hash(passWord);
     
 return new UserModel({
-    username:username,
-    password:_pwd,
-    nickname:nickname,
-    permission:permission
+    userName:userName,
+    passWord:_pwd,
+    nickName:nickName,
+    userType:userType
 }).save()
 .then((results)=>{
-    let{_id,username,nickname,permission} = results;
-    return { _id,username,nickname,permission }
+    let{_id,nickName,userName,userType} = results;
+    return { _id,nickName,userName,userType }
 }).catch(()=>{
     return false
 })
@@ -30,19 +30,18 @@ return new UserModel({
 
 const judgeUserByUsername = (_username) => {
     return UserModel
-    .find({ username:_username })
-    .then((results) => {
-        return results
-    })
-    .catch(() => {
-        return false
-    })
+        .find({ userName: _username })
+        .then((results) => {
+            return results
+        })
+        .catch(() => {
+            return false
+        })
             
 }
 
-const login =  (pwd,password)=>{
-    console.log(pwd,password,'login')
-    return  bcrypt.compareSync(pwd, password)
+const login =  (passWord, _passWord) => {
+    return  bcrypt.compareSync(passWord, _passWord)
 }
 
 

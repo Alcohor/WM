@@ -2,38 +2,84 @@
 <template>
   <el-menu
     :collapse="collapsed"
-    router
+    :router="true" 
     unique-opened
-    default-active="dashboard"
+    default-active="1"
     background-color="#031529"
     style="border-right:0px;"
     text-color="#b7bcc2"
     active-text-color="#fff"
   >
-    <!--跟据菜单数据动态生成菜单，深度支持3级-->
-    <template v-for="menu in menus">
-      <!--判断是否有子菜单，无子菜单则直接生成菜单项-->
-      <el-menu-item v-if="menu.children.length<1" :index="menu.path">
-        <i :class="menu.icon"></i>
-        <span slot="title">{{menu.title}}</span>
+    <template v-if="userInfo.userType === 1">
+      <el-menu-item index="1" :route="{name: '首页'}">
+        <i class="el-icon-menu" style="margin-right: 10px"></i>
+        首页
       </el-menu-item>
-      <!--判断是否有子菜单，有子菜单生成子菜单-->
-      <el-submenu v-if="menu.children.length>0" :index="menu.path" background-color="#fff">
+      <el-submenu index="2">
         <template slot="title">
-          <i :class="menu.icon"></i>
-          <span>{{menu.title}}</span>
+          <i class="el-icon-goods"></i>
+          <span>商家管理</span>
         </template>
-        <template v-for="menu2 in menu.children">
-          <!--判断是否有子菜单，无子菜单则直接生成菜单项-->
-          <el-menu-item v-if="menu2.children.length<1" :index="menu2.path">{{menu2.title}}</el-menu-item>
-          <!--判断是否有子菜单，有子菜单生成子菜单-->
-          <el-submenu v-if="menu2.children.length>0" :index="menu2.path">
-            <template slot="title">{{menu2.title}}</template>
-            <template v-for="menu3 in menu2.children">
-              <el-menu-item :index="menu3.path">{{menu3.title}}</el-menu-item>
-            </template>
-          </el-submenu>
+        <el-menu-item-group>
+          <el-menu-item index="2-1">商铺下架</el-menu-item>
+          <el-menu-item index="2-2">商家信息维护</el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
+      <el-submenu index="3">
+        <template slot="title">
+          <i class="el-icon-bell"></i>
+          <span>活动管理</span>
         </template>
+        <el-menu-item-group>
+          <el-menu-item index="3-1">活动封面上架</el-menu-item>
+          <el-menu-item index="3-2">活动介绍</el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
+      <el-submenu index="4">
+        <template slot="title">
+          <i class="el-icon-warning"></i>
+          <span>投诉管理</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="4-1">新订单</el-menu-item>
+          <el-menu-item index="4-2">已完成</el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
+    </template>
+    <template v-else>
+      <el-menu-item index="1" :route="{name: '首页'}">
+        <i class="el-icon-menu" style="margin-right: 10px"></i>
+        首页
+      </el-menu-item>
+      <el-submenu index="2">
+        <template slot="title">
+          <i class="el-icon-news"></i>
+          <span>店铺管理</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="2-1" :route="{name:'店铺信息维护'}">店铺信息维护</el-menu-item>
+          <el-menu-item index="2-2" :route="{name:'优惠活动上架'}">活动优惠上架</el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
+      <el-submenu index="3">
+        <template slot="title">
+          <i class="el-icon-goods"></i>
+          <span>餐食管理</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="3-1" :route="{name:'餐食信息维护'}">餐食信息维护</el-menu-item>
+          <el-menu-item index="3-2" :route="{name:'餐食上架'}">餐食上架</el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
+      <el-submenu index="4">
+        <template slot="title">
+          <i class="el-icon-tickets"></i>
+          <span>订单管理</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="4-1" :route="{name:'新订单'}">新订单</el-menu-item>
+          <el-menu-item index="4-2" :route="{name:'已完成订单'}">已完成</el-menu-item>
+        </el-menu-item-group>
       </el-submenu>
     </template>
   </el-menu>
@@ -41,26 +87,29 @@
 
 <script>
 // 导入vuex状态
-import { getMenus } from '../../service/api';
+import { getMenus } from "../../service/api";
+import { mapMutations, mapGetters } from "vuex";
+import Cookies from "js-cookie";
+import axios from "axios";
 export default {
-  name: 'LeftMenu',
-  data () {
+  name: "LeftMenu",
+  data() {
     return {
       menus: []
     };
   },
-  props: ['collapsed'],
+  props: ["collapsed"],
+  computed: {
+    ...mapGetters("user", ["userInfo"])
+  },
   methods: {
-    getMenus () {
+    getMenus() {
       // 从sessionStorage中加载用户menu信息
-      let user = JSON.parse(sessionStorage.getItem('user'));
+      let user = JSON.parse(sessionStorage.getItem("user"));
       if (user) {
         this.menus = user.menus;
       }
     }
-  },
-  mounted () {
-    this.getMenus();
   }
 };
 </script>

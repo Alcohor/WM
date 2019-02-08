@@ -2,36 +2,39 @@
 <template>
     <el-form :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left" label-width="0px" class="login-container">
         <h3 class="title text-center">外卖平台管理系统</h3>
-        <el-form-item prop="loginuser">
-            <el-input type="text" v-model="loginForm.loginuser" auto-complete="off" placeholder="账号" @keyup.enter.native="loginIn" :autofocus="true"></el-input>
+        <el-form-item prop="userName">
+            <el-input type="text" v-model="loginForm.userName" auto-complete="off" placeholder="账号" @keyup.enter.native="loginIn" :autofocus="true"></el-input>
         </el-form-item>
-        <el-form-item prop="loginpwd">
-            <el-input type="password" v-model="loginForm.loginpwd" auto-complete="off" placeholder="密码" @keyup.enter.native="loginIn"></el-input>
+        <el-form-item prop="passWord">
+            <el-input type="password" v-model="loginForm.passWord" auto-complete="off" placeholder="密码" @keyup.enter.native="loginIn"></el-input>
         </el-form-item>
         <el-checkbox v-model="checked" class="remember">记住密码</el-checkbox>
         <el-form-item style="width:100%;margin-top:10px;">
             <el-button type="primary" style="width:100%;" @click.native.prevent="loginIn" :loading="logining">登录</el-button>
             <!--<el-button type="primary" style="width:50%;" @click.native.prevent="test" :loading="logining">测试</el-button>-->
         </el-form-item>
+        <el-button type="text" @click.prevent="$router.push({name: 'regist'})">去注册</el-button>
     </el-form>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import {requestLogin, login} from '../service/api';
+import axios from 'axios'
 export default {
   name: 'Login',
   data () {
     return {
       logining: false,
       loginForm: {
-        loginuser: '',
-        loginpwd: ''
+        userName: '',
+        passWord: ''
       },
       loginRules: {
-        loginuser: [
+        userName: [
                     { required: true, message: '请输入账号', trigger: 'blur' }
         ],
-        loginpwd: [
+        passWord: [
                     { required: true, message: '请输入密码', trigger: 'blur' }
         ]
       },
@@ -39,31 +42,44 @@ export default {
     };
   },
   methods: {
+        ...mapActions('user', ['GET_USER_INFO']),
     resetForm () {
       this.$refs.loginForm.resetFields();
     },
     loginIn (ev) {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          this.logining = true;
-          var loginParams = {loginuser: this.loginForm.loginuser, loginpwd: this.loginForm.loginpwd};
-          requestLogin(loginParams).then(data => {
-            this.logining = false;
-            let {msg, code, user} = data;
-            if (code !== 200) {
-              this.$message({
-                message: msg,
-                type: 'error'
-              });
-            } else {
-              sessionStorage.setItem('user', JSON.stringify(user));
-              this.$router.push({path: '/'});
-            }
-          });
+      axios.post('/be/api/admin/login', {
+        userName: this.loginForm.userName,
+        passWord: this.loginForm.passWord
+      }).then(data => {
+        if (data.data.code === 200) {
+          this.$message.success('登陆成功')
+          this.GET_USER_INFO()
+          this.$router.push({name: 'index'})
         } else {
-          return false;
+          this.$message.error(data.data.data)
         }
-      });
+      })
+      // this.$refs.loginForm.validate((valid) => {
+      //   if (valid) {
+      //     this.logining = true;
+      //     var loginParams = {loginuser: this.loginForm.loginuser, loginpwd: this.loginForm.loginpwd};
+      //     requestLogin(loginParams).then(data => {
+      //       this.logining = false;
+      //       let {msg, code, user} = data;
+      //       if (code !== 200) {
+      //         this.$message({
+      //           message: msg,
+      //           type: 'error'
+      //         });
+      //       } else {
+      //         sessionStorage.setItem('user', JSON.stringify(user));
+      //         this.$router.push({path: '/'});
+      //       }
+      //     });
+      //   } else {
+      //     return false;
+      //   }
+      // });
     },
     test () {
       login({account: 'admin'}).then(data => {

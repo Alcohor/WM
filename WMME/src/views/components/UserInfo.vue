@@ -4,7 +4,7 @@
     <!--用户信息下拉菜单-->
     <el-dropdown @command="dropdownCommand">
       <span class="el-dropdown-link">
-        {{name}}
+        {{userInfo.nickName}}【{{userInfo.userType===1 ? '平台管理员' : '商铺管理员'}}】
         <i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { mapGetters} from 'vuex'
 export default {
   data () {
     return {
@@ -56,9 +57,8 @@ export default {
       }
     };
   },
-  mounted () {
-    // let user = JSON.parse(sessionStorage.getItem('user'));
-    this.name = 'user.name';
+  computed: {
+    ...mapGetters('user', ['userInfo'])
   },
   methods: {
     dropdownCommand (command) {

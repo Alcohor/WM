@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var admin = require('./routes/admin')
+var auth = require('./routes/auth')
 var usersRouter = require('./routes/users');
 var movies = require('./routes/movies');
 var cinema = require('./routes/cinema')
@@ -18,7 +19,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(session({
-  secret: 'keyboard cat',
+  secret: 'cat',
   resave: false,
   saveUninitialized: true,
   cookie: {  httpOnly: false, secure: false, maxAge: 1000 * 60 * 5 }
@@ -28,13 +29,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+// app.use(function (req, res, next) {
+//   req.cookies = cookieParser.parse(req.headers.cookie);
+//   next();
+// });
 
 app.use('/', indexRouter);
-app.use('/api/admin',admin) 
+app.use('/api/admin', admin)
+app.use('/api/auth', auth)
 app.use('/api/users', usersRouter);
-app.use('/api/cinema',cinema)
-app.use('/api/movies',movies)
+app.use('/api/cinema', cinema)
+app.use('/api/movies', movies)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

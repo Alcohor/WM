@@ -14,7 +14,6 @@ const getInfo =  (id) => {
 
 
 
-
 module.exports= {
     getInfo
 }

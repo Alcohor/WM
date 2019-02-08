@@ -12,7 +12,6 @@ const get = async (req, res) => {
 const list = async(req,res)=>{
     res.set('content-type', 'application/json; charset=utf8')
     let _data = await movies_module.list(req.query);
-    console.log(req.query)
     dataHandler(_data, res, 'movies')
 }
 

@@ -1,14 +1,17 @@
 <!--登录页-->
 <template>
-    <el-form :model="registeForm" :rules="registeRules" ref="registeForm" label-position="left" label-width="0px" class="login-container">
-        <h3 class="title text-center">外卖平台管理系统</h3>
-        <el-form-item prop="loginuser">
-            <el-input type="text" v-model="registeForm.loginuser" auto-complete="off" placeholder="请输入账号" @keyup.enter.native="loginIn" :autofocus="true"></el-input>
+    <el-form :model="registeForm" :rules="registeRules" ref="registeForm" label-position="left" label-width="0px" class="registe-container">
+        <h3 class="title text-center">外卖平台管理系统 · 注册</h3>
+        <el-form-item prop="registeNickname">
+            <el-input type="text" v-model="registeForm.nickName" auto-complete="off" placeholder="请输入昵称" @keyup.enter.native="registeIn" :autofocus="true"></el-input>
         </el-form-item>
-        <el-form-item prop="loginpwd">
-            <el-input type="password" v-model="registeForm.loginpwd" auto-complete="off" placeholder="请输入密码" @keyup.enter.native="loginIn"></el-input>
+        <el-form-item prop="registeuser">
+            <el-input type="text" v-model="registeForm.userName" auto-complete="off" placeholder="请输入账号" @keyup.enter.native="registeIn" :autofocus="true"></el-input>
         </el-form-item>
-        <el-form-item prop="loginuser">
+        <el-form-item prop="registepassword">
+            <el-input type="password" v-model="registeForm.passWord" auto-complete="off" placeholder="请输入密码" @keyup.enter.native="registeIn"></el-input>
+        </el-form-item>
+        <el-form-item prop="registeuserType">
            <el-select v-model="registeForm.userType" placeholder="请选择账号类型">
             <el-option label="平台管理员" :value="1"></el-option>
             <el-option label="店铺管理员" :value="2"></el-option>
@@ -16,25 +19,30 @@
         </el-form-item>
         <el-checkbox v-model="checked" class="remember">记住密码</el-checkbox>
         <el-form-item style="width:100%;margin-top:10px;">
-            <el-button type="primary" style="width:100%;" @click.native.prevent="handleRegiste" :loading="logining">注册</el-button>
+            <el-button type="primary" style="width:100%;" @click.native.prevent="handleRegiste" :loading="registeing">注册</el-button>
         </el-form-item>
+        <el-button type="text" @click.prevent="$router.push({name: 'login'})">去登陆</el-button>
     </el-form>
 </template>
 
 <script>
-import {requestLogin, login} from '../service/api';
+// import {requestregiste, registe} from '../service/api';
 import axios from 'axios'
 export default {
-  name: 'Login',
+  name: 'registe',
   data () {
     return {
-      logining: false,
+      registeing: false,
       registeForm: {
+        nickName: '',
         userName: '',
         passWord: '',
         userType: null
       },
       registeRules: {
+        nickName: [
+                    { required: true, message: '请输入昵称', trigger: 'blur' }
+        ],
         userName: [
                     { required: true, message: '请输入账号', trigger: 'blur' }
         ],
@@ -50,14 +58,23 @@ export default {
   },
   methods: {
     resetForm () {
-      this.$refs.loginForm.resetFields();
+      this.$refs.registeForm.resetFields();
     },
     handleRegiste (ev) {
       // this.$refs.registeForm.validate((valid) => {
-          var loginParams = {userName: this.registeForm.userName, passWord: this.registeForm.password, userType: this.resetForm.userType};
-          axios.get('www.baidu.com')
-          // requestLogin(loginParams).then(data => {
-          //   this.logining = false;
+          axios.post('/be/api/admin/registe', {
+            nickName: this.registeForm.nickName, 
+            userName: this.registeForm.userName, 
+            passWord: this.registeForm.passWord, 
+            userType: this.registeForm.userType
+            }).then(data => {
+              if (data.data.code === 200) {
+                this.$message.success('注册成功')
+                this.$router.push({name: 'login'})
+              }
+            } )
+          // requestregiste(registeParams).then(data => {
+          //   this.registeing = false;
           //   let {msg, code, user} = data;
           //   if (code !== 200) {
           //     this.$message({
@@ -72,7 +89,7 @@ export default {
       // });
     },
     test () {
-      login({account: 'admin'}).then(data => {
+      registe({account: 'admin'}).then(data => {
         console.log(data);
       });
     }
@@ -81,7 +98,7 @@ export default {
 </script>
 
 <style lang= "scss">
-  .login-container {
+  .registe-container {
     /*box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);*/
     -webkit-border-radius: 5px;
     border-radius: 5px;
