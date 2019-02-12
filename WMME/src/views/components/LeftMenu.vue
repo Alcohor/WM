@@ -32,7 +32,7 @@
         </template>
         <el-menu-item-group>
           <el-menu-item index="3-1">活动封面上架</el-menu-item>
-          <el-menu-item index="3-2">活动介绍</el-menu-item>
+          <el-menu-item index="3-2">活动信息管理</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-submenu index="4">
@@ -41,8 +41,8 @@
           <span>投诉管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="4-1">新订单</el-menu-item>
-          <el-menu-item index="4-2">已完成</el-menu-item>
+          <el-menu-item index="4-1">未处理投诉</el-menu-item>
+          <el-menu-item index="4-2">已处理投诉</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </template>
@@ -78,7 +78,7 @@
         </template>
         <el-menu-item-group>
           <el-menu-item index="4-1" :route="{name:'新订单'}">新订单</el-menu-item>
-          <el-menu-item index="4-2" :route="{name:'已完成订单'}">已完成</el-menu-item>
+          <el-menu-item index="4-2" :route="{name:'已完成订单'}">已完成订单</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </template>

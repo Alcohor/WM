@@ -9,7 +9,7 @@ var admin = require('./routes/admin')
 var auth = require('./routes/auth')
 var usersRouter = require('./routes/users');
 var movies = require('./routes/movies');
-var cinema = require('./routes/cinema')
+var shop = require('./routes/shop')
 var session = require('express-session')
 
 
@@ -38,7 +38,7 @@ app.use('/', indexRouter);
 app.use('/api/admin', admin)
 app.use('/api/auth', auth)
 app.use('/api/users', usersRouter);
-app.use('/api/cinema', cinema)
+app.use('/api/shop', shop)
 app.use('/api/movies', movies)
 
 // catch 404 and forward to error handler
