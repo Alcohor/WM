@@ -7,11 +7,11 @@
             <app-home-swiper></app-home-swiper>
             <div class="rest-list"> <span></span> <i>热门店铺</i> <span></span></div>
             <div class="rest-wrap">
-                <ul class="wrap" v-if = "results" >
+                <ul class="wrap" v-if = "shopList.length" >
                     <rest-item
-                    v-for= "result in results"
-                    :key = "result.id"
-                    :info = "result"
+                    v-for= "shop in shopList"
+                    :key = "shop._id"
+                    :info = "shop"
                     ></rest-item>
                 </ul>
             </div>
@@ -28,13 +28,15 @@ import RestItem from '@c/common/RestItem'
 import AppHomeSwiper from '@c/layout/AppHomeSwiper'
 import scroll from '@utils/scroll'
 import { Toast } from 'mint-ui';
+import axios from 'axios'
 
     export default{
         name:"app-home",
         data(){
             return {
-                results:null,
-                count:0
+                shopList: [],
+                results: null,
+                count: 0
             }
         },
         components:{
@@ -44,16 +46,20 @@ import { Toast } from 'mint-ui';
            AppHomeSwiper
         },
        
-        async beforeCreate() {
-            let _result = await this.$http({
-                url:'/maoyan/ajax/movieOnInfoList?token='
-            })
-            this.results = _result.data.movieList;
-            this.idList = _result.data.movieIds;
-            this.idArr=[]
-            for(var i=12,len=this.idList.length;i<len;i+=10){
-                this.idArr.push(this.idList.slice(i,i+10).toString());
-            }
+        async created(){
+            axios.get('/be/api/shop/list').then(
+              data => {
+                this.shopList = data.data.data
+                console.log(this.shopList, 2384)
+                }
+            )
+            // this.results = _result.data;
+            // console.log(results,2938)
+            // this.idList = _result.data.movieIds;
+            // this.idArr=[]
+            // for(var i=12,len=this.idList.length;i<len;i+=10){
+            //     this.idArr.push(this.idList.slice(i,i+10).toString());
+            // }
         },
        
         mounted(){           
@@ -73,12 +79,12 @@ import { Toast } from 'mint-ui';
                 })
                 return false;
             };
-                let moreRests = await this.$http({
-                    url:'/maoyan/ajax/moreComingList?token=',
-                    params:{
-                        movieIds:this.idArr[this.count]
-                    }
-                })
+                // let moreRests = await this.$http({
+                //     url:'/maoyan/ajax/moreComingList?token=',
+                //     params:{
+                //         movieIds:this.idArr[this.count]
+                //     }
+                // })
                 this.count++
                 console.log(moreRests)
                 this.results = this.results.concat(moreRests.data.coming);
@@ -127,7 +133,7 @@ html{
     }
   }
   .rest-wrap{
-      padding-bottom: 1.333333remx;
+      padding-bottom: 1.333333rem;
   }
 }
 </style>

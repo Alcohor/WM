@@ -7,6 +7,13 @@ function resolve(url){
 module.exports={
     devServer: {
         proxy: {
+          '/be': {
+            target: 'http://localhost:9090/',
+            changeOrigin: true,
+            pathRewrite: {
+              '^/be': ''
+            }
+          },
           '/maoyan': {
             target: 'https://m.maoyan.com/',
             changeOrigin: true,

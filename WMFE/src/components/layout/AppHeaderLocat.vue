@@ -50,13 +50,13 @@ export default {
       [Cell.name]: Cell,
       CitiesContainer
   },
- async beforeCreate(){
-    let result = await this.$http({
-            url: '/mz/v4/api/city'
-        })
+//  async beforeCreate(){
+//     let result = await this.$http({
+//             url: '/mz/v4/api/city'
+//         })
         
-    this.cities = result.data.data.cities  
-  },
+//     this.cities = result.data.data.cities  
+//   },
   computed:{
     orderCities(){
       return this.$cities(this.cities)
