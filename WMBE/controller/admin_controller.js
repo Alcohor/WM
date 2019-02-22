@@ -2,9 +2,10 @@ const admin_module =require('../module/admin_module')
 const {dataHandler} = require('../utils/index')
 
 const regist = async (req,res,next)=>{
-    let isLogin = await admin_module.judgeUserByUsername(req.body.username)
+    let isLogin = await admin_module.judgeUserByUsername(req.body.userName)
+    console.log(isLogin.length, 928)
     // 如果没有注册过
-    if(! isLogin.length){
+    if(!isLogin.length){
         // 如果没有输入用户名
         if(!req.body.nickName){
             req.body.nickName = req.body.userName
@@ -22,8 +23,8 @@ const regist = async (req,res,next)=>{
 
 const login = async(req,res,next)=>{
     var _judge_result = await admin_module.judgeUserByUsername(req.body.userName);
-    console.log(req.body.userName, 898)
-    if (!!_judge_result) {
+    console.log(_judge_result,9098)
+    if (!!_judge_result.length) {
         let isPwdRight = await admin_module.login(req.body.passWord, _judge_result[0].passWord)
         if (isPwdRight) {
             req.session.userinfo = {
@@ -39,7 +40,7 @@ const login = async(req,res,next)=>{
             res.render('admin',{code:201,data:JSON.stringify('密码错误')})
         }
     }else{
-        res.render('admin',{code:202,data:JSON.stringify('用户名错误')})
+        res.render('admin',{code:202,data:JSON.stringify('该用户名未注册')})
     }
 }
 

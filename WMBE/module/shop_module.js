@@ -40,6 +40,14 @@ const shopInfo = (query) => {
       return false;
     });
 };
+const id = (query) => {
+  return Shop.find(query).then((results) => {
+      return results[0].id
+    })
+    .catch((err) => {
+      return false;
+    });
+};
 //返回列表结束
 
 //保存添加店铺数据
@@ -60,7 +68,6 @@ const save = (body) => {
     });
 };
 const saveAvatar = (req) => {
-  console.log(req.body,93765)
   req.body.pic ='http://localhost:9090' + req.body.pic
   return Shop.updateOne({ administratorId:req.session.userinfo.userId }, req.body)
     .then((results) => {
@@ -111,6 +118,7 @@ const  update = (req) =>{
 
 module.exports = {
   list,
+  id,
   saveAvatar,
   shopInfo,
   save,

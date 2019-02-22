@@ -1,17 +1,22 @@
 <template>
     
     <div class="rest-intro">
-        这里是店铺简介
+        <p class="words">
+        {{this.introduce}}
+        </p>
     </div>
 
 </template>
 
 <script>
     export default{
-
+        props: ['introduce']
     }  
 </script>
 
-<style lang="sass">
-
+<style lang="scss">
+    .words{
+        padding: 0 .133333rem;
+        text-align-last: left;
+    }
 </style>

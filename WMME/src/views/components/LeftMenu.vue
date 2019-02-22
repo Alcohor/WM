@@ -88,7 +88,7 @@
 <script>
 // 导入vuex状态
 import { getMenus } from "../../service/api";
-import { mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapGetters, mapActions } from "vuex";
 import Cookies from "js-cookie";
 import axios from "axios";
 export default {
@@ -103,6 +103,8 @@ export default {
     ...mapGetters("user", ["userInfo"])
   },
   methods: {
+    ...mapActions("shop", ['GET_SHOP_ID']),
+    ...mapActions("user", ['GET_USER_INFO']),
     getMenus() {
       // 从sessionStorage中加载用户menu信息
       let user = JSON.parse(sessionStorage.getItem("user"));
@@ -110,7 +112,11 @@ export default {
         this.menus = user.menus;
       }
     }
-  }
+  },
+  created() {
+    this.GET_USER_INFO()
+    this.GET_SHOP_ID()
+  },
 };
 </script>
 

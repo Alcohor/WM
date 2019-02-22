@@ -5,10 +5,9 @@
             <!-- slides -->
             <swiper-slide
                 v-for = "billboard in billboards"
-                :key  = "billboard.id"
+                :key  = "billboard"
             >
-            
-                <img width="100%" :src="billboard.imageUrl" :title= "billboard.name" :alt="billboard.name">
+                <img class="acitve-pic" :src="billboard" :title= "billboard.name" :alt="billboard.name">
             </swiper-slide>
             <!-- Optional controls -->
             <div class="swiper-pagination"  slot="pagination"></div>
@@ -34,10 +33,10 @@
     },
     async beforeCreate () {
         let result = await this.$http({
-            url: '/mz/v4/api/billboard/home?__t=1541468153894'
+            url: '/be/api/active/pic'
         })
-        console.log(result)
-        this.billboards = result.data.data.billboards
+        console.log(result.data.data)
+        this.billboards = result.data.data
     },
     computed: {
       swiper () {
@@ -56,6 +55,10 @@
 <style lang="scss">
     .app-home-swiper {
         height: 5.625067rem!important;
+    }
+    .acitve-pic {
+        height: 5.625067rem!important;
+        width: 100%;
     }
 </style>
 

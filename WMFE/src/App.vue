@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <main>
-      {{Window}}
       <keep-alive include="app-home">
         <router-view></router-view>
         <input type="text">

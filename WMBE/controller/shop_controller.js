@@ -11,6 +11,16 @@ const list = async (req,res) => {
     let _data = await shop_module.list(req.query);
     dataHandler(_data,res,'shop')//返回的数据处理
 }
+const id = async (req,res) => {
+    res.set('content-type','application/json;charset=utf8')
+    let _data = await shop_module.id({administratorId: req.session.userinfo.userId});
+    dataHandler(_data,res,'shop')//返回的数据处理
+}
+const shopInfoById = async (req,res) => {
+    res.set('content-type','application/json;charset=utf8')
+    let _data = await shop_module.selectID(req.query);
+    dataHandler(_data,res,'shop')//返回的数据处理
+}
 
 const shopInfo = async (req,res) => {
     res.set('content-type','application/json;charset=utf8')
@@ -57,7 +67,9 @@ const update = async (req,res) =>{
 
 module.exports = {
     list,
+    id,
     shopInfo,
+    shopInfoById,
     save,
     saveAvatar,
     remove,

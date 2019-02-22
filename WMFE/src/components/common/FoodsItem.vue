@@ -1,6 +1,6 @@
 <template>
     <li class="foods-item">
-        <img class="foods-img" :src= 'info.img'>
+        <img class="foods-img" :src= 'info.pic'>
         <div class="foods-intro-wrap">
             <h2 class = "foods-name">{{info.name}}</h2>
             <div class="price">

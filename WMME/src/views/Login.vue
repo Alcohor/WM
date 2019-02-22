@@ -54,7 +54,7 @@ export default {
         if (data.data.code === 200) {
           this.$message.success('登陆成功')
           this.GET_USER_INFO()
-          this.$router.push({name: 'index'})
+          this.$router.push({name: '首页'})
         } else {
           this.$message.error(data.data.data)
         }

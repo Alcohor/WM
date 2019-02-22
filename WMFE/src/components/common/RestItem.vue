@@ -22,8 +22,8 @@ export default {
     goToDetail() {
       //   this.$router.push({ name: 'detail', params: { id: this.info.id } })
       this.$router.push({
-        name: "rest-introduce",
-        params: { id: this.info.id },
+        name: "detail",
+        params: { shopId: this.info._id },
         query: { name: this.info.name }
       });
     }
@@ -54,7 +54,7 @@ export default {
         display:inline-block;
         background-color:#ff9912;
         color:#fff; 
-        padding:1px 2px;
+        padding:.026667rem .053333rem;
         border-radius:.053333rem;
         margin: 0 .053333rem;
         font-size:.266667rem; 

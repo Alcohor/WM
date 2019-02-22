@@ -2,16 +2,16 @@
 <template>
     <el-form :model="registeForm" :rules="registeRules" ref="registeForm" label-position="left" label-width="0px" class="registe-container">
         <h3 class="title text-center">外卖平台管理系统 · 注册</h3>
-        <el-form-item prop="registeNickname">
+        <el-form-item prop="nickName">
             <el-input type="text" v-model="registeForm.nickName" auto-complete="off" placeholder="请输入昵称" @keyup.enter.native="registeIn" :autofocus="true"></el-input>
         </el-form-item>
-        <el-form-item prop="registeuser">
+        <el-form-item prop="userName">
             <el-input type="text" v-model="registeForm.userName" auto-complete="off" placeholder="请输入账号" @keyup.enter.native="registeIn" :autofocus="true"></el-input>
         </el-form-item>
-        <el-form-item prop="registepassword">
+        <el-form-item prop="passWord">
             <el-input type="password" v-model="registeForm.passWord" auto-complete="off" placeholder="请输入密码" @keyup.enter.native="registeIn"></el-input>
         </el-form-item>
-        <el-form-item prop="registeuserType">
+        <el-form-item prop="userType">
            <el-select v-model="registeForm.userType" placeholder="请选择账号类型">
             <el-option label="平台管理员" :value="1"></el-option>
             <el-option label="店铺管理员" :value="2"></el-option>
@@ -41,27 +41,36 @@ export default {
       },
       registeRules: {
         nickName: [
-                    { required: true, message: '请输入昵称', trigger: 'blur' }
+          { required: true, message: '请输入昵称', trigger: 'blur' }
         ],
         userName: [
-                    { required: true, message: '请输入账号', trigger: 'blur' }
+          { required: true, message: '请输入账号', trigger: 'blur' }
         ],
-        password: [
-                    { required: true, message: '请输入密码', trigger: 'blur' }
+        passWord: [
+          { required: true, message: '请输入密码', trigger: 'blur' }
         ],
         userType: [
-                    { required: true, message: '请选择用户类型', trigger: 'blur' }
+          { required: true, message: '请选择用户类型', trigger: 'blur' }
         ]
       },
       checked: false
     };
   },
   methods: {
+    // isSubmitDisabled() {
+    //   if(this.registeForm.nickName === ''|| this.registeForm.userName === ''|| this.registeForm.passWord=== '' || this.registeForm === null){
+    //     return true;
+    //   }
+    //   return false;
+    // },
     resetForm () {
       this.$refs.registeForm.resetFields();
     },
     handleRegiste (ev) {
-      // this.$refs.registeForm.validate((valid) => {
+          if(this.registeForm.nickName === ''|| this.registeForm.userName === ''|| this.registeForm.passWord=== '' || this.registeForm === null){
+            this.$message.error('请输入必填项');
+            return false;
+          }
           axios.post('/be/api/admin/registe', {
             nickName: this.registeForm.nickName, 
             userName: this.registeForm.userName, 
@@ -71,6 +80,9 @@ export default {
               if (data.data.code === 200) {
                 this.$message.success('注册成功')
                 this.$router.push({name: 'login'})
+              } else {
+                this.$message.error(data.data.data);
+                
               }
             } )
           // requestregiste(registeParams).then(data => {

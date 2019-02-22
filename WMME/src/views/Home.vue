@@ -336,8 +336,7 @@ export default {
     ...mapActions('user', ['GET_USER_INFO'])
   },
   mounted() {
-    this.drawLine();
-    this.GET_USER_INFO()
+    this.drawLine()
   }
 };
 </script>

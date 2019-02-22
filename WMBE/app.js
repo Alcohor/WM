@@ -10,6 +10,8 @@ var auth = require('./routes/auth')
 var usersRouter = require('./routes/users');
 var movies = require('./routes/movies');
 var shop = require('./routes/shop')
+var food =  require('./routes/foods')
+var active = require('./routes/active')
 var session = require('express-session')
 
 
@@ -40,6 +42,8 @@ app.use('/api/auth', auth)
 app.use('/api/users', usersRouter);
 app.use('/api/shop', shop)
 app.use('/api/movies', movies)
+app.use('/api/active', active)
+app.use('/api/foods', food)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -33,14 +33,14 @@ const routes = [
         component : Mine,
     },
     {
-        path:'/detail/:id',
+        path:'/detail/:shopId',
         name:'detail',
         component : Detail,
         props: true,
         children:[
-            {path:'foods-list',name:'foods-list', component : FoodsList},
-            {path:'comment-list',name:'comment-list',component : CommentList},
-            {path:'rest-introduce',name:'rest-introduce',component : RestIntro}
+            {path:'foods-list/:shopId',name:'foods-list', component : FoodsList},
+            {path:'comment-list/:shopId',name:'comment-list',component : CommentList},
+            {path:'rest-introduce/:shopId',name:'rest-introduce',component : RestIntro}
       ]
 
     }
