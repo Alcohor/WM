@@ -8,6 +8,8 @@ import Order from '@pages/order/Order'
 import Mine from '@pages/mine/Mine'
 
 import Detail from '@pages/detail/Detail'
+import Login from '@pages/Login'
+import Regist from '@pages/Regist'
 import FoodsList from '@c/layout/FoodsList'
 import CommentList from '@c/layout/CommentList'
 import RestIntro from '@c/layout/RestIntro'
@@ -16,6 +18,14 @@ const routes = [
     {
         path:'/',
         redirect:{name:'home'}
+    },
+    {
+        path:'/regist',
+        component: Regist
+    },
+    {
+        path:'/login',
+        component: Login
     },
     {
         path:'/home',

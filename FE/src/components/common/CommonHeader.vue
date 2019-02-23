@@ -14,6 +14,7 @@
 
     export default{
         props:['title',"isBackShow"],
+        name: 'app-header',
         data(){
             return{ }
         },

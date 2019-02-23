@@ -1,7 +1,12 @@
 <template>
-  <ul class="foods-list">
-    <foods-item v-for="item in info" :key="item.id" :info="item">{{item}}</foods-item>
-  </ul>
+  <div>
+    <ul class="foods-list" v-if="info.length">
+      <foods-item v-for="item in info" :key="item.id" :info="item">{{item}}</foods-item>
+    </ul>
+    <div v-else>
+      <p>这家店还没有餐食，去别家看看吧！</p>
+    </div>
+  </div>
 </template>
 
 <script>
