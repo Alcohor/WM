@@ -13,7 +13,8 @@ import Regist from '@pages/Regist'
 import FoodsList from '@c/layout/FoodsList'
 import CommentList from '@c/layout/CommentList'
 import RestIntro from '@c/layout/RestIntro'
-
+import EditUserInfo from '@pages/EditUserInfo'
+import MyAdress from '@pages/MyAdress'
 const routes = [
     {
         path:'/',
@@ -21,11 +22,23 @@ const routes = [
     },
     {
         path:'/regist',
+        name:'regist',
         component: Regist
     },
     {
         path:'/login',
+        name:'login',
         component: Login
+    },
+    {
+        path:'/user-info',
+        name:'user-info',
+        component: EditUserInfo
+    },
+    {
+        path:'/adress',
+        name:'adress',
+        component: MyAdress
     },
     {
         path:'/home',
@@ -52,7 +65,6 @@ const routes = [
             {path:'comment-list/:shopId',name:'comment-list',component : CommentList},
             {path:'rest-introduce/:shopId',name:'rest-introduce',component : RestIntro}
       ]
-
     }
 ]
 

@@ -5,7 +5,7 @@
             <div class="position-wrap">
                 <a @click="isLocatShow = !isLocatShow">
                     <i class="fa fa-map-marker locat-icon"></i>
-                    <span class="locat-name">{{chunks.city?chunks.city.cityName:"正在定位"}}</span>
+                    <span class="locat-name" v-if="city">{{city}}</span>
                     <i class="fa fa-sort-down arrow-down" ></i>
                 </a>
             </div>
@@ -21,8 +21,8 @@
 
 <script>
     import AppHeaderLocat from '@c/layout/AppHeaderLocat'
-    import { CHANGE_CITY } from '@/store/chunks/mutation-types'
-    import { mapState } from 'vuex'
+    // import { CHANGE_CITY } from '@/store/chunks/mutation-types'
+    import { mapState, mapGetters } from 'vuex'
     export default{
         data(){
             return{ isLocatShow:false}
@@ -32,11 +32,19 @@
         },
         beforeCreate() {
              this.$bus.$on("changeIsShow",function(){
-            }),
+            })
            
-            this.$store.dispatch( 'chunks/getCurrentPosition')
+            // this.$store.dispatch( 'chunks/getCurrentPosition')
         },
-        computed: mapState(['chunks']),       
+        computed:{      
+            ...mapGetters('adress', ['getLocat']),
+            city: function(){
+                if(Object.keys(this.getLocat).length===0){
+                    return '请选择所在地'
+                }
+                return this.getLocat.city.value+this.getLocat.area.value
+            }
+        } 
     }
 
 </script>

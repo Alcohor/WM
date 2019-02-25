@@ -11,13 +11,32 @@ var usersRouter = require('./routes/users');
 var movies = require('./routes/movies');
 var shop = require('./routes/shop')
 var food =  require('./routes/foods')
+var order = require('./routes/order.js')
 var active = require('./routes/active')
 var session = require('express-session')
 
+var mAdmin = require('./routes/mAdmin')
 
 var app = express();
-
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 // view engine setup
+
+io.on('connection', function (socket) {
+  //接收到消息时触发
+  socket.on('message', function (data) {
+      console.log('服务端收到 : ', data);
+      //注意send()方法其实是发送一个 'message' 事件
+      //客户端要通过on('message')来响应
+      socket.send('你好客户端, ' + data);
+  });
+  //发生错误时触发
+  socket.on('error', function (err) {
+      console.log(err);
+  });
+});
+
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(session({
@@ -36,6 +55,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //   next();
 // });
 
+
 app.use('/', indexRouter);
 app.use('/api/admin', admin)
 app.use('/api/auth', auth)
@@ -45,6 +65,8 @@ app.use('/api/movies', movies)
 app.use('/api/active', active)
 app.use('/api/foods', food)
 
+app.use('/m/api/admin', mAdmin)
+app.use('/api/order', order)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

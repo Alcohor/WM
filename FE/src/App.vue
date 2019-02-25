@@ -10,10 +10,20 @@
 </template>
 
 <script>
+
 import axios from 'axios'
+import {mapActions} from 'vuex'
+import io from 'socket.io'
 export default {
   name: "app",
-  components: {}
+  components: {},
+  methods: {
+    ...mapActions('user',['GET_USER_INFO']) 
+  },
+  mounted() {
+    this.GET_USER_INFO();
+    this.socket = io.connect('http://qiufengh.com:8081') 
+  }
 };
 </script>
 

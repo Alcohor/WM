@@ -29,6 +29,7 @@ import AppHomeSwiper from '@c/layout/AppHomeSwiper'
 import scroll from '@utils/scroll'
 import { Toast } from 'mint-ui';
 import axios from 'axios'
+import {mapGetters} from 'vuex'
 
     export default{
         name:"app-home",
