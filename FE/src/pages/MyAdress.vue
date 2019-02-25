@@ -1,10 +1,10 @@
 <template>
   <div>
     <app-header title="我的地址" :isBackShow="true"></app-header>
-    <!-- <p>{{city}}</p> -->
+    <p>{{city}}</p>
     <mt-field
       label="详细地址"
-      :placeholder="adress"
+      :placeholder="getPrecise"
       type="textarea"
       rows="4"
       v-model="adress"
@@ -16,6 +16,7 @@
 <script>
 import AppHeader from "@c/common/CommonHeader";
 import { mapGetters, mapMutations } from "vuex";
+import {Toast} from 'mint-ui'
 import axios from 'axios'
 export default {
   data() {
@@ -24,7 +25,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("adress", ["getLocat","fullAdress"]),
+    ...mapGetters("adress", ["getLocat","fullAdress", 'getPrecise']),
     city: function() {
       if (Object.keys(this.getLocat).length === 0) {
         return "暂未选择省市区";
@@ -40,9 +41,7 @@ export default {
     ...mapMutations('adress', ['SET_PRECISE']),
     handleSave(){
       this.SET_PRECISE(this.adress);
-      let adress = this.fullAdress
-      console.log(adress)
-      axios.post('be/m/api/admin/edit', {adress: adress}).then(
+      axios.post('be/m/api/admin/edit', {adress: {locat:this.getLocat, precise: this.getPrecise}}).then(
         data => {
           if(data.data.code === 200) {
             Toast('修改成功');

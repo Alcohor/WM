@@ -15,7 +15,9 @@ var Shop = mongoose.model("shops",new mongoose.Schema({
     endTime:String,// 营业结束时间
     startCost: Number,// 起送金额
     deliveryCost: Number,// 配送费
-    packageCost: Number// 打包费
+    packageCost: Number,// 打包费
+    status: Boolean, //上下架状态
+    stars: Number // 店铺评分
   })
 );
 

@@ -23,7 +23,7 @@
 import axios from 'axios'
 import AppHeader from '@c/common/CommonHeader'
 import { Toast } from 'mint-ui'
-import {mapActions} from 'vuex'
+import {mapActions, mapMutations,mapGetters} from 'vuex'
 export default {
   data() {
     return {
@@ -34,6 +34,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('user', ['userInfo']),
     isBtnDisabled (){
       if(this.form.userName === ''|| this.form.passWord=== ''){
           return true;
@@ -43,13 +44,15 @@ export default {
   },
   methods: {
     ...mapActions('user', ['GET_USER_INFO']),
+    ...mapMutations('adress', ['SET_LOCAT']),
         handleLogin (ev) {
           axios.post('/be/m/api/admin/login', {
             userName: this.form.userName, 
             passWord: this.form.passWord, 
-            }).then(data => {
+            }).then(async(data) => {
               if (data.data.code === 200) {
-                this.GET_USER_INFO()
+                await this.GET_USER_INFO();
+                this.SET_LOCAT(this.userInfo.adress)
                 Toast('登录成功');
                 setTimeout(()=> {
                   this.$router.push({name: 'home'})

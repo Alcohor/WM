@@ -7,7 +7,7 @@ var MUserModel = mongoose.model('mUsers',new mongoose.Schema({
     userName:String,
     passWord:String,
     nickName:String,
-    adress: String,
+    adress: Object,
     phone:String,
     avatar:String,
 }))
@@ -58,8 +58,8 @@ const userInfo = (req) => {
 } 
 
 const edit = (req) => {
-  return MUserModel
-  .updateOne({ _id: req.session.userinfo.userId }, req.body)
+    console.log(req.body, 908)
+  return MUserModel.updateOne({ _id: req.session.userinfo.userId }, req.body)
   .then((results) => {
       return results
   })

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { mutations } from './adress'
 export default {
   namespaced: true,
   state: {
@@ -22,6 +23,7 @@ export default {
       axios.get('/be/m/api/admin/user-info').then(data => {
         let userInfo = data.data.data[0];
         ctx.commit('SET_USER_INFO', userInfo);
+        mutations.SET_LOCAT(userInfo.adress.locat)
       });
     }
   },

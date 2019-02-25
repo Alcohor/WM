@@ -12,6 +12,7 @@ var Foods = mongoose.model("foods",new mongoose.Schema({
     info: String, // 餐食信息
     saleMount:Number, // 月销量 
     shopId: String, // 店铺ID
+    status:Boolean //上下架状态
   })
 );
 
