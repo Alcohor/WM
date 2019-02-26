@@ -37,12 +37,12 @@
             // this.$store.dispatch( 'chunks/getCurrentPosition')
         },
         computed:{      
-            ...mapGetters('adress', ['getLocat']),
+            ...mapGetters('user', ['userInfo']),
             city: function(){
-                if(Object.keys(this.getLocat).length===0){
+                if(Object.keys(this.userInfo.adress).length===0){
                     return '请选择所在地'
                 }
-                return this.getLocat.city.value+this.getLocat.area.value
+                return this.userInfo.adress.locat.province.value+this.userInfo.adress.locat.city.value
             }
         } 
     }
