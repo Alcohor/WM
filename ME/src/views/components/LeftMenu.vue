@@ -91,6 +91,7 @@ import { getMenus } from "../../service/api";
 import { mapMutations, mapGetters, mapActions } from "vuex";
 import Cookies from "js-cookie";
 import axios from "axios";
+import Vue from 'vue'
 export default {
   name: "LeftMenu",
   data() {
@@ -113,8 +114,14 @@ export default {
       }
     }
   },
-  created() {
-    this.GET_USER_INFO()
+  async created() {
+    await this.GET_USER_INFO()
+    // if(!this.userInfo.userid){
+    //   window.location.href = '/#/login'
+    // }
+    setTimeout(()=>{
+    this.$socket.emit("compile",{shopId:'5c740367388a5e34b4c91e64', msg: '购买'});
+    }, 2000)
     this.GET_SHOP_ID()
   },
 };

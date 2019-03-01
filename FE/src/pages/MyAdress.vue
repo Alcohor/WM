@@ -26,22 +26,19 @@ export default {
   },
   computed: {
     ...mapGetters("adress", ["getLocat","fullAdress", 'getPrecise']),
-    city: function() {
-      if (Object.keys(this.getLocat).length === 0) {
-        return "暂未选择省市区";
-      }
-      return (
-        this.getLocat.province.value +
-        this.getLocat.city.value +
-        this.getLocat.area.value
-      );
+    ...mapGetters("user", ["userInfo"]),
+    city: function(){
+        if(Object.keys(this.userInfo.locat).length===0){
+            return '您暂未选择所在地，请前往首页选择'
+        }
+        return this.userInfo.locat.province.value+this.userInfo.locat.city.value + this.userInfo.locat.area.value
     }
   },
   methods: {
     ...mapMutations('adress', ['SET_PRECISE']),
     handleSave(){
       this.SET_PRECISE(this.adress);
-      axios.post('be/m/api/admin/edit', {adress: {locat:this.getLocat, precise: this.getPrecise}}).then(
+      axios.post('be/m/api/admin/edit', {adress: this.adress}).then(
         data => {
           if(data.data.code === 200) {
             Toast('修改成功');

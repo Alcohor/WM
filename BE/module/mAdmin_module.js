@@ -1,8 +1,7 @@
 const mongoose = require('../utils/mongoose')
 const bcrypt = require('bcrypt')
 const { hash }= require('../utils/hash')
-
-
+const {io}  = require('../app')
 var MUserModel = mongoose.model('mUsers',new mongoose.Schema({
     userName:String,
     passWord:String,
@@ -10,6 +9,7 @@ var MUserModel = mongoose.model('mUsers',new mongoose.Schema({
     adress: Object,
     phone:String,
     avatar:String,
+    locat:Object
 }))
 
 const regist = async ({userName,passWord,nickName,userType}) => {

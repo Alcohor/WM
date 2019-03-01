@@ -11,29 +11,32 @@ var usersRouter = require('./routes/users');
 var movies = require('./routes/movies');
 var shop = require('./routes/shop')
 var food =  require('./routes/foods')
-var order = require('./routes/order.js')
+// var order = require('./routes/order.js')
 var active = require('./routes/active')
 var session = require('express-session')
 
 var mAdmin = require('./routes/mAdmin')
 
 var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
-// view engine setup
 
-io.on('connection', function (socket) {
-  //接收到消息时触发
-  socket.on('message', function (data) {
-      console.log('服务端收到 : ', data);
-      //注意send()方法其实是发送一个 'message' 事件
-      //客户端要通过on('message')来响应
-      socket.send('你好客户端, ' + data);
-  });
-  //发生错误时触发
-  socket.on('error', function (err) {
-      console.log(err);
-  });
+// import express from 'express'
+
+var http = require('http').Server(app);;
+// var server = http.createServer(function (req, res) {
+// }).listen(9091);//创建http服务
+console.log('Server running ');
+var io=require('socket.io')(http);
+// var io = require('socket.io').listen(server);
+io.on('connection', (socket) => {
+    
+    socket.on('compile', data => {
+      console.log(data)
+      socket.emit('login', data);
+    });   
+});
+
+http.listen(9091, function(){
+  console.log('listening on *:9091');
 });
 
 
@@ -66,7 +69,7 @@ app.use('/api/active', active)
 app.use('/api/foods', food)
 
 app.use('/m/api/admin', mAdmin)
-app.use('/api/order', order)
+// app.use('/api/order', order)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -83,4 +86,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+module.exports = {
+  app,
+  io
+}
+

@@ -10,7 +10,11 @@
                 <p>选择收货地址</p>
             </div>
             <div class="content">
-              <v-distpicker type="mobile" @selected="selectedCity">
+              <v-distpicker 
+                :province="userInfo.locat.province ? userInfo.locat.province.value : ''"
+                :city="userInfo.locat.province ? userInfo.locat.city.value : ''"
+                :area="userInfo.locat.province ? userInfo.locat.area.value : ''"
+                type="mobile" @selected="selectedCity">
               </v-distpicker>
             </div>
         </div>
@@ -20,10 +24,11 @@
 <script>
 import CitiesContainer from '@c/layout/CitiesContainer'
 import { IndexList, IndexSection, Cell } from 'mint-ui';
-import {mapState, mapMutations} from 'vuex'
+import {mapState, mapMutations, mapGetters} from 'vuex'
 import {CHANGE_CITY} from '../../store/chunks/mutation-types'
 import VDistpicker from 'v-distpicker'
 import {Toast} from 'mint-ui' 
+import axios from 'axios'
 export default {
   props: { isShow: Boolean },
   components:{
@@ -35,26 +40,43 @@ export default {
     orderCities(){
       return this.$cities(this.cities)
     },
-    ...mapState(['chunks'])
-    
+    ...mapState(['chunks']),
+    ...mapGetters('user',['userInfo'])
   },
 
   created(){
    
   },
   methods: {
-        ...mapMutations('adress',['SET_LOCAT']),
-        changeIsShow(){
-          this.$bus.$emit('changeIsShow') 
-        },
-  selectedCity(city){
-    this.SET_LOCAT(city)
-    Toast('地址保存成功')
-    setTimeout(() => {
-      this.$emit('update:isShow', false)
-    },800)
-  }
+    ...mapMutations('user',['SET_LOCAT']),
+    changeIsShow(){
+      this.$bus.$emit('changeIsShow') 
     },
+    selectedCity(city){
+      if(!this.userInfo._id){
+        Toast('保存地址请先登录')
+        return
+      }
+      this.SET_LOCAT(city)
+      this.handleSave(city)
+      Toast('地址保存成功')
+      setTimeout(() => {
+        this.$emit('update:isShow', false)
+      },800)
+    },
+    handleSave(city){
+      axios.post('be/m/api/admin/edit', {locat: city}).then(
+        data => {
+          if(data.data.code === 200) {
+            setTimeout(() => {
+              this.$router.push({name:'mine'})
+            }, 1500)
+            this.GET_USER_INFO()
+          }
+        }
+      )
+    }
+  },
   data(){
     return{
       cities:[],

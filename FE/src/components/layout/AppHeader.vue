@@ -39,10 +39,10 @@
         computed:{      
             ...mapGetters('user', ['userInfo']),
             city: function(){
-                if(Object.keys(this.userInfo.adress).length===0){
+                if(Object.keys(this.userInfo.locat).length===0){
                     return '请选择所在地'
                 }
-                return this.userInfo.adress.locat.province.value+this.userInfo.adress.locat.city.value
+                return this.userInfo.locat.city.value + this.userInfo.locat.area.value
             }
         } 
     }

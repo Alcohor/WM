@@ -8,13 +8,17 @@ export default {
       adress: '',
       userId: '',
       phone: '',
-      avatar: ''
+      avatar: '',
+      locat: {}
     }
   },
   mutations: {
     SET_USER_INFO(state, payload) {
       payload= !payload? {} : payload
       state.userInfo = Object.assign(state.userInfo, payload)
+    },
+    SET_LOCAT(state, payload) {
+      state.userInfo.locat = payload
     }
     },
   actions: {

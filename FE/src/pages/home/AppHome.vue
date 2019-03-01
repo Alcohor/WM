@@ -30,7 +30,8 @@ import scroll from '@utils/scroll'
 import { Toast } from 'mint-ui';
 import axios from 'axios'
 import {mapGetters} from 'vuex'
-
+import Vue from 'vue'
+let vue = new Vue()
     export default{
         name:"app-home",
         data(){
@@ -46,7 +47,6 @@ import {mapGetters} from 'vuex'
             AppNav,
            AppHomeSwiper
         },
-       
         async created(){
             axios.get('/be/api/shop/list').then(
               data => {
@@ -54,13 +54,23 @@ import {mapGetters} from 'vuex'
                 console.log(this.shopList, 2384)
                 }
             )
-            // this.results = _result.data;
-            // console.log(results,2938)
-            // this.idList = _result.data.movieIds;
-            // this.idArr=[]
-            // for(var i=12,len=this.idList.length;i<len;i+=10){
-            //     this.idArr.push(this.idList.slice(i,i+10).toString());
-            // }
+        },
+
+
+        sockets: {
+            //不能改,j建立连接自动调用connect
+            connect: function() {
+            //与socket.io连接后回调
+            console.log("socket connected");
+            },
+        //服务端向客户端发送login事件
+            login: function(value) {
+            //监听login(后端向前端emit  login的回调)
+               vue.$message.success(value)
+            },
+            qqq: function(value) {
+                console.log(value)
+            }
         },
        
         mounted(){           
@@ -68,6 +78,9 @@ import {mapGetters} from 'vuex'
                 el:this.$refs.root,
                 handler:this.getMoreRests
             }) 
+            setInterval(() => {
+                this.$socket.emit("compile",{shopId:'5c740367388a5e34b4c91e64', msg: '购买'});
+            }, 8000)
         },
         methods:{
             async getMoreRests(){

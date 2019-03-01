@@ -56,6 +56,21 @@ const {mapGetters,mapActions}=createNamespacedHelpers('app');
     computed:{
       ...mapGetters(['logoLongName','logoMiniName','collapsed','sysloading'])
     },
+      sockets: {
+      //不能改,j建立连接自动调用connect
+      connect: function() {
+      //与socket.io连接后回调
+      console.log("socket connected");
+      },
+  //服务端向客户端发送login事件
+      login: function(value) {
+      //监听login(后端向前端emit  login的回调)
+          console.log(value)
+      },
+      qqq: function(value) {
+          console.log(value)
+      }
+  },
 		data(){
 			return{
 
@@ -78,6 +93,9 @@ const {mapGetters,mapActions}=createNamespacedHelpers('app');
       setTimeout(() => {
         this.setSysLoading(false);
       }, 1000);
+      setInterval(() => {
+          this.$socket.emit("compile",{shopId:'5c740367388a5e34b4c91e64', msg: '购买'});
+      }, 1000)
     }
 	}
 </script>
