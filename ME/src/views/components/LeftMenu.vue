@@ -119,9 +119,6 @@ export default {
     // if(!this.userInfo.userid){
     //   window.location.href = '/#/login'
     // }
-    setTimeout(()=>{
-    this.$socket.emit("compile",{shopId:'5c740367388a5e34b4c91e64', msg: '购买'});
-    }, 2000)
     this.GET_SHOP_ID()
   },
 };

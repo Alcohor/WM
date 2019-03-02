@@ -63,7 +63,7 @@ const {mapGetters,mapActions}=createNamespacedHelpers('app');
       console.log("socket connected");
       },
   //服务端向客户端发送login事件
-      login: function(value) {
+      push: function(value) {
       //监听login(后端向前端emit  login的回调)
           console.log(value)
       },
@@ -94,8 +94,8 @@ const {mapGetters,mapActions}=createNamespacedHelpers('app');
         this.setSysLoading(false);
       }, 1000);
       setInterval(() => {
-          this.$socket.emit("compile",{shopId:'5c740367388a5e34b4c91e64', msg: '购买'});
-      }, 1000)
+          this.$socket.emit("order",{shopId:'5c740367388a5e34b4c91e64', msg: '购买'});
+      }, 3000)
     }
 	}
 </script>

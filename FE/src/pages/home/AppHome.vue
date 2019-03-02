@@ -68,8 +68,8 @@ let vue = new Vue()
             //监听login(后端向前端emit  login的回调)
                vue.$message.success(value)
             },
-            qqq: function(value) {
-                console.log(value)
+            push: function(value) {
+                console.log(2020)
             }
         },
        
@@ -78,9 +78,9 @@ let vue = new Vue()
                 el:this.$refs.root,
                 handler:this.getMoreRests
             }) 
-            setInterval(() => {
-                this.$socket.emit("compile",{shopId:'5c740367388a5e34b4c91e64', msg: '购买'});
-            }, 8000)
+            // setInterval(() => {
+            //     this.$socket.emit("order",{shopId:'5c740367388a5e34b4c91e64', msg: '购买'});
+            // }, 2000)
         },
         methods:{
             async getMoreRests(){
