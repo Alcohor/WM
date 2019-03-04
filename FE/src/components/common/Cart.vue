@@ -1,6 +1,6 @@
 <template>
     <div :class="classNameColor">
-        <cart-list :cart-data="goods" v-if="isCartListShow"></cart-list>
+        <cart-list :cart-data="list" v-if="isCartListShow"></cart-list>
         <span class="cover"></span>
         <div class="cart-container" @click= "handlerCartBtnClick">
             <span :class="classNameCart">
@@ -12,7 +12,7 @@
                 <span class="extra-cost">另需需配送费6元</span>
             </div>
         </div>
-        <div class="payment-btn">去结算</div>
+        <div class="payment-btn" @click="toCartPage">去结算</div>
     </div>
 </template>
 
@@ -29,20 +29,23 @@ export default {
         allInfo: 'cart/allInfo'
         }),
         ...mapState({
-        // goods: 'cart/goods'
-        goods: state => state.cart.goods,
+        shops: state => state.cart.orders,
         }),
-        data(){
-            return {
-                classNameColor:"cart empty",
-                classNameCart:"car-icon-wrap"
-            }
+        list(){
+            let list = []
+            this.shops.forEach(shop => {
+                shop.list.forEach(item => {
+                    list.push(item)
+                })
+            });
+            return list
         }
-        
     },
     data(){
         return {
-            isCartListShow:false
+            isCartListShow:false,
+            classNameColor:"cart empty",
+            classNameCart:"car-icon-wrap"
         }
     }
     ,
@@ -50,6 +53,9 @@ export default {
         handlerCartBtnClick(){
             this.isCartListShow=!this.isCartListShow
            
+        },
+        toCartPage(){
+            this.$router.push({name: 'cart'})
         },
         handlerCartStyle(){
             

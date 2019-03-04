@@ -11,7 +11,7 @@ var usersRouter = require('./routes/users');
 var movies = require('./routes/movies');
 var shop = require('./routes/shop')
 var food =  require('./routes/foods')
-// var order = require('./routes/order.js')
+var order = require('./routes/order.js')
 var active = require('./routes/active')
 var session = require('express-session')
 
@@ -22,23 +22,6 @@ var app = express();
 // import express from 'express'
 
 var http = require('http').Server(app);;
-// var server = http.createServer(function (req, res) {
-// }).listen(9091);//创建http服务
-console.log('Server running ');
-var io=require('socket.io')(http);
-// var io = require('socket.io').listen(server);
-io.on('connection', (socket) => {
-    
-    socket.on('order', data => {
-      console.log(data)
-      socket.emit('push', data);
-    });   
-});
-
-http.listen(9091, function(){
-  console.log('listening on *:9091');
-});
-
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -69,7 +52,8 @@ app.use('/api/active', active)
 app.use('/api/foods', food)
 
 app.use('/m/api/admin', mAdmin)
-// app.use('/api/order', order)
+app.use('/api/order', order)
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -86,8 +70,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = {
-  app,
-  io
-}
+module.exports = app
 

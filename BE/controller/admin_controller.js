@@ -44,10 +44,30 @@ const login = async(req,res,next)=>{
     }
 }
 
+const isLogin = async (req,res,next)=>{
+    
+    let data = req.session.userinfo ? true : false
+    let result = {
+        code: 200,
+        data:JSON.stringify(data)
+    }
+    res.render('admin',result)
+}
+
+const logout = (req, res) => {
+    req.session.userinfo = null;
+    let result = {
+        code: 200,
+        data:JSON.stringify('退出成功')
+    }
+    res.render('admin',result)
+}
 
 
 
 module.exports={
     regist,
     login,
+    isLogin,
+    logout
 }

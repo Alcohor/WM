@@ -13,6 +13,14 @@ const list = async (req,res) => {
 }
 const id = async (req,res) => {
     res.set('content-type','application/json;charset=utf8')
+    if(!req.session.userinfo) {
+        res.render('user',{
+            code:201,
+            data:JSON.stringify('请登录')
+        })
+        return
+    }
+    console.log(1)
     let _data = await shop_module.id({administratorId: req.session.userinfo.userId});
     dataHandler(_data,res,'shop')//返回的数据处理
 }
@@ -24,12 +32,26 @@ const shopInfoById = async (req,res) => {
 
 const shopInfo = async (req,res) => {
     res.set('content-type','application/json;charset=utf8')
+    if(!req.session.userinfo) {
+        res.render('user',{
+            code:201,
+            data:JSON.stringify('请登录')
+        })
+        return
+    }
     let _data = await shop_module.shopInfo({administratorId: req.session.userinfo.userId});
     dataHandler(_data,res,'shop')//返回的数据处理
 }
 //添加店铺
 const save = async (req,res) =>{
     res.set('content-type','application/json;charset=utf8')
+    if(!req.session.userinfo) {
+        res.render('user',{
+            code:201,
+            data:JSON.stringify('请登录')
+        })
+        return
+    }
     req.body.administratorId = req.session.userinfo.userId
     let _data = await shop_module.save(req.body);
     console.log(_data, 109)

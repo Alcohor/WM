@@ -5,7 +5,7 @@ import chunks from './chunks'
 import user from './user'
 import adress from './adress'
 
-Vue.use(Vuex)
+Vue.use(Vuex) 
 
 const store = new Vuex.Store({
     modules: {

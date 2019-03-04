@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapMutations } from 'vuex'
     export default{
-        props:['info'],
+        props:['info', 'shopId'],
         data(){
             return{
                 num:0,
@@ -25,15 +25,17 @@ import { mapActions } from 'vuex'
             console.log(this.num,111)
         },
         methods:{
-            ...mapActions({
-                addGoods:'cart/addGoods'
-            }),
+            ...mapMutations('cart', ['UPDATE_CAR_GOODS']),
             addGoodsHandler(val,oldval){
                 console.log(this.num)
                 let control_type=oldval<val
-                let {id,name,price}= this.info
-                this.addGoods({
-                    id,name,price,num:this.num
+                let {_id: id,name,price}= this.info
+                this.UPDATE_CAR_GOODS({
+                    id,
+                    name,
+                    price,
+                    num:this.num,
+                    shopId: this.shopId
                 })
             }
         }

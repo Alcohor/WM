@@ -9,20 +9,6 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import ECharts from 'vue-echarts/components/ECharts';
 import Mock from './mock'
-import VueSocketIO from 'vue-socket.io';
-// import socketio from 'socket.io-client';
-// Vue.use(VueSocketio, socketio('ws://localhost:9091'));
-// Vue.use(VueSocketio, 'ws://localhost:9091');
-
-Vue.use(new VueSocketIO({
-  debug: true,
-  connection: 'ws://localhost:9091',
-  // vuex: {
-  //     store,
-  //     actionPrefix: 'SOCKET_',
-  //     mutationPrefix: 'SOCKET_'
-  // }
-}))
 Vue.use(Vuex)
 Vue.use(ElementUI)
 Vue.use(ECharts)

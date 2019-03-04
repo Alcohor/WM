@@ -1,10 +1,12 @@
-var express = require('express');
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
+const oreder = require('../controller/order_controller')
+const photoUpload = require('../middleware/photoUpload')
 
-//加载socket模块
-var tcpServer = require("../utils/socket");
+router.get('/list',oreder.list)
+router.post('/create',oreder.create)
+router.post('/remark',oreder.remark)
+router.get('/updata-status',oreder.updataStatus)
 
-//调用socket模块--设置端口--初始化
-tcpServer.ISocket(9091);
 
-module.exports = router;
+module.exports = router

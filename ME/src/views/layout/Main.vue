@@ -7,7 +7,7 @@
         <el-aside :class="collapsed?'aside-mini':'aside-long'" width="collapsed?'65px':'220px'">
             <!--LOGO-->
             <el-col :span="24" :class="collapsed?'logo-mini':'logo-long'">
-                {{collapsed?logoMiniName:logoLongName}}
+                <!-- {{collapsed?logoMiniName:logoLongName}} -->
             </el-col>
             <el-col :span="24">
                 <!--菜单-->
@@ -43,9 +43,8 @@
 import LeftMenu from '@/views/components/LeftMenu'
 import UserInfo from '@/views/components/UserInfo'
 import Breadcrumb from '@/views/components/Breadcrumb'
-//引用vuex的导入语法糖功能
-import {createNamespacedHelpers} from 'vuex';
-const {mapGetters,mapActions}=createNamespacedHelpers('app');
+import {mapGetters, mapActions} from 'vuex'
+import axios from 'axios';
 	export default{
 		name:'Main',
 		components:{
@@ -54,26 +53,12 @@ const {mapGetters,mapActions}=createNamespacedHelpers('app');
       Breadcrumb
 		},
     computed:{
-      ...mapGetters(['logoLongName','logoMiniName','collapsed','sysloading'])
+      ...mapGetters('app',['logoLongName','logoMiniName','collapsed','sysloading']),
+      ...mapGetters("user", ["userInfo"])
     },
-      sockets: {
-      //不能改,j建立连接自动调用connect
-      connect: function() {
-      //与socket.io连接后回调
-      console.log("socket connected");
-      },
-  //服务端向客户端发送login事件
-      push: function(value) {
-      //监听login(后端向前端emit  login的回调)
-          console.log(value)
-      },
-      qqq: function(value) {
-          console.log(value)
-      }
-  },
 		data(){
 			return{
-
+        isLogin: true
 			}
 		},
 		methods: {
@@ -84,18 +69,38 @@ const {mapGetters,mapActions}=createNamespacedHelpers('app');
         this.setCollapsed(collapse);
         //将菜单的打开状态保存到浏览器的localStorage中
         localStorage.setItem('collapsed',collapse);
-			}
-		},
-    mounted(){
+      },
+      checkLogin(){
+        axios.get('/be/api/admin/isLogin').then(
+          data => {
+            if(data.data.code === 200){
+              this.isLogin = data.data.data;
+            }else{
+              this.isLogin=false;
+            }
+          }
+        )
+      }
+    },
+    
+    watch:{
+      isLogin: {
+        handler: function() {
+          if(!this.isLogin){
+            this.$message.warning('您未登录，跳转至登录页')
+            window.location.href = '/#/login'
+          }
+        }
+      }
+    },
+     mounted(){
       //先从浏览器localStorage中读出菜单状态
       this.setCollapsed(localStorage.getItem('collapsed')=="true");
+      this.checkLogin()
       //系统加载显示延迟一秒
       setTimeout(() => {
         this.setSysLoading(false);
       }, 1000);
-      setInterval(() => {
-          this.$socket.emit("order",{shopId:'5c740367388a5e34b4c91e64', msg: '购买'});
-      }, 3000)
     }
 	}
 </script>

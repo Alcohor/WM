@@ -116,9 +116,6 @@ export default {
   },
   async created() {
     await this.GET_USER_INFO()
-    // if(!this.userInfo.userid){
-    //   window.location.href = '/#/login'
-    // }
     this.GET_SHOP_ID()
   },
 };

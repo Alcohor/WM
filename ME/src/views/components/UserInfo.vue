@@ -34,6 +34,7 @@
 
 <script>
 import { mapGetters} from 'vuex'
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -70,6 +71,7 @@ export default {
         })
           .then(() => {
             sessionStorage.removeItem('user');
+            this.logout();
             this.$router.push({ path: '/login' });
           })
           .catch(() => {});
@@ -77,6 +79,9 @@ export default {
       if (command === 'modpass') {
         this.modpassFormVisible = true;
       }
+    },
+    logout(){
+      axios.get('/be/api/admin/logout')
     },
     modpassSubmit () {
       if (

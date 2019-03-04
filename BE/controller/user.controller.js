@@ -15,7 +15,12 @@ const isSignIn = (req,res,next)=>{
 }
 
 const getInfo= async(req,res,next)=>{
-    console.log(req.session, 2983)
+    if(!req.session.userinfo) {
+        res.render('user',{
+            code:201,
+            data:JSON.stringify('请登录')
+        })
+    }
     let _result = await user_module.getInfo(req.session.userinfo.userId)
     
         res.render('user',{

@@ -2,12 +2,12 @@
 <transition
     enter-active-class="slideInUp"
     leave-active-class="slideOutDown">
-    <div class="cart-list animated">
+    <div class="cart-list animated" v-if="cartData.length">
         <div class="title">
             <span class="title-wrap">已选商品:</span>
-            <a class="clear-all"> <i class="fa fa-trash-o"></i> 清空</a>
+            <a class="clear-all" @click.stop="clearAll"> <i class="fa fa-trash-o"></i> 清空</a>
         </div>
-        <ul class="cart-list-wrap">
+        <ul class="cart-list-wrap" >
             <cart-goods-item v-for="item in cartData" :key="item.id" :goodInfo="item"></cart-goods-item>
         </ul>
         
@@ -17,10 +17,17 @@
 
 <script>
 import CartGoodsItem from '@c/common/CartGoodsItem'
+import { mapMutations } from 'vuex'
     export default{
         props:['cart-data'],
         components:{
             CartGoodsItem
+        },
+        methods: {
+            ...mapMutations('cart',['UPDATE_CAR_GOODS']),
+            clearAll(){
+                this.$store.commit('cart/UPDATE_CAR_GOODS', null)
+            }
         }
     }
 </script>

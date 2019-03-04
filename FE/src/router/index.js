@@ -15,6 +15,8 @@ import CommentList from '@c/layout/CommentList'
 import RestIntro from '@c/layout/RestIntro'
 import EditUserInfo from '@pages/EditUserInfo'
 import MyAdress from '@pages/MyAdress'
+import CartPage from '@pages/CartPage'
+
 const routes = [
     {
         path:'/',
@@ -34,6 +36,11 @@ const routes = [
         path:'/user-info',
         name:'user-info',
         component: EditUserInfo
+    },
+    {
+        path:'/cart',
+        name:'cart',
+        component: CartPage
     },
     {
         path:'/adress',

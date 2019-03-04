@@ -55,32 +55,12 @@ let vue = new Vue()
                 }
             )
         },
-
-
-        sockets: {
-            //不能改,j建立连接自动调用connect
-            connect: function() {
-            //与socket.io连接后回调
-            console.log("socket connected");
-            },
-        //服务端向客户端发送login事件
-            login: function(value) {
-            //监听login(后端向前端emit  login的回调)
-               vue.$message.success(value)
-            },
-            push: function(value) {
-                console.log(2020)
-            }
-        },
        
         mounted(){           
            this.scroll = scroll({
                 el:this.$refs.root,
                 handler:this.getMoreRests
             }) 
-            // setInterval(() => {
-            //     this.$socket.emit("order",{shopId:'5c740367388a5e34b4c91e64', msg: '购买'});
-            // }, 2000)
         },
         methods:{
             async getMoreRests(){
@@ -93,12 +73,6 @@ let vue = new Vue()
                 })
                 return false;
             };
-                // let moreRests = await this.$http({
-                //     url:'/maoyan/ajax/moreComingList?token=',
-                //     params:{
-                //         movieIds:this.idArr[this.count]
-                //     }
-                // })
                 this.count++
                 console.log(moreRests)
                 this.results = this.results.concat(moreRests.data.coming);

@@ -81,11 +81,11 @@ export default {
       //   }
       // });
     },
-    test () {
-      login({account: 'admin'}).then(data => {
-        console.log(data);
-      });
-    }
+    // test () {
+    //   login({account: 'admin'}).then(data => {
+    //     console.log(data);
+    //   });
+    // }
   }
 };
 </script>
