@@ -5,6 +5,7 @@ import UserStore from './modules/system/UserStore';
 import AppStore from './modules/AppStore';
 import shop from './shop';
 import user from './user'
+import order from './order'
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -14,7 +15,8 @@ const store = new Vuex.Store({
         'system/user':UserStore,
         'app':AppStore,
         'user': user,
-        'shop':shop
+        'shop':shop,
+        'order': order
     }
 });
 

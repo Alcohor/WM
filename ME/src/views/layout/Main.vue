@@ -24,6 +24,7 @@
                 <el-col :span="12" style="text-align:right;"><UserInfo></UserInfo></el-col>
             </el-header>
             <!--BODY-->
+            {{orderCount}}
             <el-main :class="collapsed?'main-mini':''">
                 <el-col :span="24" style="background-color:#fff;height:71px;;">
                     <!--面包屑-->
@@ -43,7 +44,7 @@
 import LeftMenu from '@/views/components/LeftMenu'
 import UserInfo from '@/views/components/UserInfo'
 import Breadcrumb from '@/views/components/Breadcrumb'
-import {mapGetters, mapActions} from 'vuex'
+import {mapGetters, mapActions, mapMutations} from 'vuex'
 import axios from 'axios';
 	export default{
 		name:'Main',
@@ -54,15 +55,19 @@ import axios from 'axios';
 		},
     computed:{
       ...mapGetters('app',['logoLongName','logoMiniName','collapsed','sysloading']),
-      ...mapGetters("user", ["userInfo"])
+      ...mapGetters("user", ["userInfo"]),
+      ...mapGetters("shop", ["shopId"]),
+      ...mapGetters('order', ['orderCount'])
     },
 		data(){
 			return{
-        isLogin: true
-			}
+        isLogin: true,
+        tID: null
+      }
 		},
 		methods: {
       ...mapActions(['setLogoLongName','setLogoMiniName','setCollapsed','setSysLoading']),
+      ...mapMutations('order', ['SET_ORDERS']),
 			//折叠导航栏，状态保存在sessionStorage中刷新保持状态
 			collapse:function(){
 				let collapse=!this.collapsed;
@@ -91,6 +96,9 @@ import axios from 'axios';
             window.location.href = '/#/login'
           }
         }
+      },
+      orderCount:  function(nv) {
+        this.$message.success(`您有${nv}个新订单，请前往查看`)
       }
     },
      mounted(){
@@ -101,6 +109,25 @@ import axios from 'axios';
       setTimeout(() => {
         this.setSysLoading(false);
       }, 1000);
+      this.tID = setInterval(() => {
+          axios.get('/be/api/order/list', {
+            params: {
+              shopId: this.shopId
+            }
+          }).then(
+          data => {
+            if(data.data.code === 200){
+              let orders = data.data.data.orderList
+              this.$store.commit('order/SET_ORDER', orders)
+            }else{
+              this.isLogin=false;
+            }
+          }
+        )
+      }, 15000)
+    },
+    beforeDesotry() {
+      clearInterval(this.tID)
     }
 	}
 </script>

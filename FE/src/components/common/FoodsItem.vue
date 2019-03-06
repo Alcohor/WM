@@ -13,7 +13,8 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
+import { MessageBox } from 'mint-ui';
     export default{
         props:['info', 'shopId'],
         data(){
@@ -24,19 +25,32 @@ import { mapMutations } from 'vuex'
         created(){
             console.log(this.num,111)
         },
+        computed:{
+            ...mapGetters('cart', ['orders'])
+        },
         methods:{
             ...mapMutations('cart', ['UPDATE_CAR_GOODS']),
             addGoodsHandler(val,oldval){
-                console.log(this.num)
-                let control_type=oldval<val
-                let {_id: id,name,price}= this.info
-                this.UPDATE_CAR_GOODS({
-                    id,
-                    name,
-                    price,
-                    num:this.num,
-                    shopId: this.shopId
-                })
+                let {_id: id,name,price} = this.info
+                if (Object.keys(this.orders).length > 0 && this.orders.shopId !== this.shopId) {
+                    MessageBox.confirm('您的购物车中有尚未结算的商品，是否删除并完成本次添加？').then(action => {
+                        this.UPDATE_CAR_GOODS({
+                            id,
+                            name,
+                            price,
+                            num:this.num,
+                            shopId: this.shopId
+                        })
+                    }).catch();
+                }else{
+                    this.UPDATE_CAR_GOODS({
+                            id,
+                            name,
+                            price,
+                            num:this.num,
+                            shopId: this.shopId
+                        })
+                }
             }
         }
     }

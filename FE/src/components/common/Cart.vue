@@ -25,19 +25,12 @@ export default {
          CartList
     },
     computed:{
-        ...mapGetters({
-        allInfo: 'cart/allInfo'
-        }),
-        ...mapState({
-        shops: state => state.cart.orders,
-        }),
+        ...mapGetters('cart',['allInfo','orders']),
         list(){
             let list = []
-            this.shops.forEach(shop => {
-                shop.list.forEach(item => {
-                    list.push(item)
-                })
-            });
+            if (Object.keys(this.orders).length>0) {
+                list = this.orders.list
+            }
             return list
         }
     },

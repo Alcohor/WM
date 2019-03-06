@@ -4,7 +4,7 @@ const fs = require('fs-extra')
 const PATH = require('path') // 时间格式化
 
 var Oreders = mongoose.model('order', new mongoose.Schema({
-    shopId: Array,//店铺Id
+    shopId: String,//店铺Id
     shopName: String,//店铺名
     guestId: String,//顾客Id
     sum: Number,// 金额
@@ -29,12 +29,8 @@ const _getall = (query) => {//获得所有电影数据
         })
 }
 
-const list = async({pageNo = 1,pageSize = 10, search =''})=>{
-    let reg = new RegExp(search,'i')
-    let _query = search ? {movieName:reg}:{}//查询条件
-    let _all_items = await _getall(_query)
-
-    return Oreders.find(_query)
+const list = async(query)=>{
+    return Oreders.find(query)
     .sort({createTime:-1})
     .then((result)=>{
         return{

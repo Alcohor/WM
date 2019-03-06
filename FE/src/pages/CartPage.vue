@@ -45,19 +45,15 @@ export default {
   },
   computed: {
     ...mapGetters('user', ['userInfo']),
-    ...mapGetters({
-        allInfo: 'cart/allInfo'
-        }),
-        ...mapState({
-        shops: state => state.cart.orders,
-        }),
+    ...mapGetters('cart',['allInfo','orders']),
     list(){
             let list = []
-            this.shops.forEach(shop => {
-                shop.list.forEach(item => {
-                    list.push(item)
-                })
-            });
+            if (Object.keys(this.orders).length===0) {
+                return []
+            }
+            this.orders.list.forEach(item => {
+                list.push(item)
+            })
             return list
         }
   },
@@ -67,12 +63,9 @@ export default {
         let createTime = new Date().getTime();
         let guestId = this.userInfo._id
         let sum = this.allInfo.allPrice
-        let list = this.shops
+        let list = this.orders.list
         let status = 0
-        let shopId = []
-        this.shops.forEach(shop => {
-            shopId.push(shop.shopId)
-        })
+        let shopId = this.orders.shopId
         axios.post('be/api/order/create', {
             createTime,
             guestId,
