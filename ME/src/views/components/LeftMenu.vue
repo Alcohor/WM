@@ -12,8 +12,10 @@
   >
     <template v-if="userInfo.userType === 1">
       <el-menu-item index="1" :route="{name: '首页'}">
-        <i class="el-icon-menu" style="margin-right: 10px"></i>
-        首页
+        <template slot="title">
+          <i class="el-icon-menu"></i>
+          <span>首页</span>
+        </template>
       </el-menu-item>
       <el-submenu index="2">
         <template slot="title">

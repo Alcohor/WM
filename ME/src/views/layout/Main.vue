@@ -7,7 +7,7 @@
         <el-aside :class="collapsed?'aside-mini':'aside-long'" width="collapsed?'65px':'220px'">
             <!--LOGO-->
             <el-col :span="24" :class="collapsed?'logo-mini':'logo-long'">
-                <!-- {{collapsed?logoMiniName:logoLongName}} -->
+                {{collapsed?logoMiniName:logoLongName}}
             </el-col>
             <el-col :span="24">
                 <!--菜单-->
@@ -66,7 +66,7 @@ import axios from 'axios';
       }
 		},
 		methods: {
-      ...mapActions(['setLogoLongName','setLogoMiniName','setCollapsed','setSysLoading']),
+      ...mapActions('app',['setLogoLongName','setLogoMiniName','setCollapsed','setSysLoading']),
       ...mapMutations('order', ['SET_ORDERS']),
 			//折叠导航栏，状态保存在sessionStorage中刷新保持状态
 			collapse:function(){
