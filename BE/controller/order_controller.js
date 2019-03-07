@@ -36,13 +36,13 @@ const getMovieInfoByName = async (req, res) => {
 
 const updataStatus = async (req, res) => {
     res.set('content-type', 'application/json; charset=utf8')
-    let _data = await order_module.updataMovie(req.body);
+    let _data = await order_module.updata(req.body);
     dataHandler(_data,res,'order')
 }
 
 const remark = async (req, res) => {
     res.set('content-type', 'application/json; charset=utf8')
-    let _data = await order_module.updataMovie(req.body);
+    let _data = await order_module.updata(req.body);
     dataHandler(_data,res,'order')
 }
 

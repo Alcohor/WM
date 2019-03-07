@@ -84,7 +84,8 @@
               新订单
             </el-badge>
           </el-menu-item>
-          <el-menu-item index="4-2" :route="{name:'已完成订单'}">已完成订单</el-menu-item>
+          <el-menu-item index="4-2" :route="{name:'进行中订单'}">进行中订单</el-menu-item>
+          <el-menu-item index="4-3" :route="{name:'已完成订单'}">已完成订单</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </template>

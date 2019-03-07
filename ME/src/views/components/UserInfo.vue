@@ -71,6 +71,7 @@ export default {
         })
           .then(() => {
             sessionStorage.removeItem('user');
+            clearInterval(this.$tId);
             this.logout();
             this.$router.push({ path: '/login' });
           })

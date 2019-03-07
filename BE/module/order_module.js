@@ -121,11 +121,20 @@ const updataMovie = async(body)=>{
     }) 
 }
 
+const updata = async(body)=>{
+return Oreders.updateOne({ _id: body._id }, { ...body }).then((results) => {
+    return results
+}).catch((err) => {
+    return false
+}) 
+}
+
 
 
 
 module.exports = {
     list:list,
+    updata,
     save: _save,//增加数据
     getById:getMovieInfoById,//根据ID取出数据
     delById:delMovieInfoById,//根据ID删除数据

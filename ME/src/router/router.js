@@ -35,6 +35,7 @@ export const appRouter = [
             { path: '/foodInfoConfig', name: '餐食信息维护', component: resolve => { require(['@/views/shop/FoodinfoConfig'], resolve); } },
             { path: '/createFoodInfo', name: '餐食上架', component: resolve => { require(['@/views/shop/CreatedFoodInfo'], resolve); }, meta: { isLogin: true, isAuth: true } },
             { path: '/newOrder', name: '新订单', component: resolve => { require(['@/views/shop/NewOrder'], resolve); }, meta: { isLogin: true, isAuth: true } },
+            { path: '/progressOrder', name: '进行中订单', component: resolve => { require(['@/views/shop/ProgressOrder'], resolve); }, meta: { isLogin: true, isAuth: true } },
             { path: '/achievedOrder', name: '已完成订单', component: resolve => { require(['@/views/shop/AchievedOrder'], resolve); }, meta: { isLogin: true, isAuth: true } },
             { path: '/auth', name: '权限管理', component: resolve => { require(['@/views/system/Auth'], resolve); }, meta: { isLogin: true, isAuth: true } },
         ]

@@ -86,6 +86,9 @@ export default {
     //     console.log(data);
     //   });
     // }
+  },
+  mounted() {
+      clearInterval(this.$tId)
   }
 };
 </script>

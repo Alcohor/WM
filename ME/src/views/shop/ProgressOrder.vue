@@ -4,7 +4,6 @@
     border
     style="width: 100%">
     <el-table-column
-      fixed
       prop="time"
       label="订单创建时间"
       width="180">
@@ -12,7 +11,7 @@
     <el-table-column
       prop="orderList"
       label="商品列表"
-      width="200">
+      width="300">
     </el-table-column>
     <el-table-column
       prop="sum"
@@ -20,13 +19,14 @@
       width="120">
     </el-table-column>
     <el-table-column
-      prop="adress"
-      label="派送地址">
+      prop="city"
+      label="派送地址"
+      width="120">
     </el-table-column>
     <el-table-column
-      prop="nickName"
+      prop="address"
       label="客户昵称"
-      width="100">
+      width="300">
     </el-table-column>
     <el-table-column
       prop="phone"
@@ -35,32 +35,22 @@
     </el-table-column>
      <el-table-column
       prop="orderStatus"
-      label="订单状态"
-      width="130">
-    </el-table-column>
-    <el-table-column
-      fixed="right"
-      label="操作"
-      width="100">
-      <template slot-scope="scope">
-        <el-button @click="commitOrder(scope.row)" type="text" size="small">发货</el-button>
-      </template>
+      label="订单状态">
     </el-table-column>
   </el-table>
 </template>
 
 <script>
-import moment from 'moment'
 import axios from 'axios'
 import { mapGetters } from 'vuex' 
+import moment from 'moment'
 export default {
   computed:{
-    ...mapGetters('shop', ['shopId']),
-    ...mapGetters('order', ['newOrder']),
+    ...mapGetters('order', ['progressOrder']),
     tableData(){
-      let tableData = this.newOrder.map(order => {
+      let tableData = this.progressOrder.map(order => {
         let time = moment(order.createTime).format('YYYY-MM-DD HH:mm:ss')
-        let orderStatus = order.status === 0 ? '用户已支付' : '';
+        let orderStatus = order.status === 1 ? '派送中' : '';
         let orderList = ''
         order.list.forEach(item => {
           orderList += ` ${item.name} * ${item.num} ` 
@@ -73,15 +63,6 @@ export default {
   data(){
     return {
       orderList: []
-    }
-  },
-  methods: {
-    commitOrder({_id}){
-      axios.post('be/api/order//updata-status', {
-        _id,
-        status: 1
-      })
-        .then()
     }
   }
 }

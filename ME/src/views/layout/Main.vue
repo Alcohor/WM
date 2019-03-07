@@ -45,6 +45,7 @@ import LeftMenu from '@/views/components/LeftMenu'
 import UserInfo from '@/views/components/UserInfo'
 import Breadcrumb from '@/views/components/Breadcrumb'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
+import Vue from 'vue'
 import axios from 'axios';
 	export default{
 		name:'Main',
@@ -109,7 +110,7 @@ import axios from 'axios';
       setTimeout(() => {
         this.setSysLoading(false);
       }, 1000);
-      this.tID = setInterval(() => {
+      Vue.prototype.$tId = setInterval(() => {
           axios.get('/be/api/order/list', {
             params: {
               shopId: this.shopId
@@ -125,9 +126,6 @@ import axios from 'axios';
           }
         )
       }, 5000)
-    },
-    beforeDesotry() {
-      clearInterval(this.tID)
     }
 	}
 </script>
