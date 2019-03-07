@@ -124,7 +124,7 @@ import axios from 'axios';
             }
           }
         )
-      }, 15000)
+      }, 5000)
     },
     beforeDesotry() {
       clearInterval(this.tID)

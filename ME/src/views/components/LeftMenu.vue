@@ -77,7 +77,11 @@
           <span>订单管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="4-1" :route="{name:'新订单'}">新订单</el-menu-item>
+          <el-menu-item index="4-1" :route="{name:'新订单'}">
+            <el-badge :value="newOrder.length" :max="99" class="item" :hidden="!newOrder.length">
+              新订单
+            </el-badge>
+          </el-menu-item>
           <el-menu-item index="4-2" :route="{name:'已完成订单'}">已完成订单</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
@@ -101,7 +105,8 @@ export default {
   },
   props: ["collapsed"],
   computed: {
-    ...mapGetters("user", ["userInfo"])
+    ...mapGetters("user", ["userInfo"]),
+    ...mapGetters("order", ["newOrder"])
   },
   methods: {
     ...mapActions("shop", ['GET_SHOP_ID']),
