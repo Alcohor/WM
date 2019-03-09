@@ -58,7 +58,7 @@ import axios from 'axios';
       ...mapGetters('app',['logoLongName','logoMiniName','collapsed','sysloading']),
       ...mapGetters("user", ["userInfo"]),
       ...mapGetters("shop", ["shopId"]),
-      ...mapGetters('order', ['orderCount'])
+      ...mapGetters('order', ['orderCount', 'newOrder'])
     },
 		data(){
 			return{
@@ -98,8 +98,10 @@ import axios from 'axios';
           }
         }
       },
-      orderCount:  function(nv) {
-        this.$message.success(`您有${nv}个新订单，请前往查看`)
+      newOrder:  function(nv,ov) {
+        if(nv.length!==ov.length&&nv.length!==0){
+          this.$message.success(`您有${nv.length}个新订单，请前往查看`)
+        }
       }
     },
      mounted(){
@@ -125,7 +127,7 @@ import axios from 'axios';
             }
           }
         )
-      }, 5000)
+      }, 2000)
     }
 	}
 </script>

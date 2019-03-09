@@ -81,7 +81,9 @@ export default {
         _id,
         status: 1
       })
-        .then()
+        .then(
+          this.$message.success('发货成功')
+        )
     }
   }
 }
