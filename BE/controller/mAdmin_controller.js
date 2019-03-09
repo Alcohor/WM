@@ -53,6 +53,24 @@ let result = await mAdmin_module.edit(req)
     dataHandler(result, res, 'user')
 }
 
+const isLogin = async (req,res,next)=>{
+    let data = req.session.userinfo ? true : false
+    let result = {
+        code: 200,
+        data:JSON.stringify(data)
+    }
+    res.render('admin',result)
+}
+
+const logout = (req, res) => {
+    req.session.userinfo = null;
+    let result = {
+        code: 200,
+        data:JSON.stringify('退出成功')
+    }
+    res.render('admin',result)
+}
+
 
 
 
@@ -60,5 +78,7 @@ module.exports={
     regist,
     login,
     edit,
-    userInfo
+    userInfo,
+    isLogin,
+    logout
 }

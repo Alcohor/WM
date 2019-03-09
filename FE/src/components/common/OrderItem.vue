@@ -7,22 +7,46 @@
             <div class="order-main-title">
                 <a href="" class="order-rest"> <div class="rest-name">大西北面食城<i class="fa fa-angle-right"></i></div> 
                 </a>
-                
-                <span class="order-status">{{status}}</span>
+                <span class="order-status">{{data.status===0 ? '已付款' : '已完成'}}</span>
             </div>
-            <span class="order-create-time">2018-10-30 11:31</span>
+            <span class="order-create-time">{{time}}</span>
             <div class="goods-info">
-                <div class="goods-title">金汤肥牛面等3件商品</div>
-                <div class="order-price">￥57.6</div>
+                <div class="goods-title">{{orderInfo}}</div>
+                <div class="order-price">￥{{data.sum}}</div>
             </div>
-            <span class="comment-btn" v-if="type ==='order-complete'">去评价</span>
+            <mt-button  class="comment-btn" type="primary" size="small" v-if="type ==='order-complete'">去评价</mt-button>
+            <mt-button  class="comment-btn" type="primary" size="small" @click="submit(data._id)" v-else>确认收货</mt-button>
       </div>
    </div>
 </template>
 
 <script>
+import axios from 'axios'
+import {Toast} from 'mint-ui'
+import {mapMutations} from 'vuex'
+import moment from 'moment'
 export default {
-  props: ["type"],
+  props:{
+    type: {
+      type: String,
+      default: 'order-complete'
+    },
+    data: {
+      type: Object,
+      default: () => {}
+    }
+  },
+  computed: {
+    orderInfo(){
+      if (this.data.list.length===1){
+        return `${this.data.list[0].name} ${this.data.list[0].num}件商品`
+      }
+      return `${this.data.list[0].name} 等商品`
+    },
+    time(){
+      return moment(this.data.createTime).format('YYYY-MM-DD HH:mm:ss')
+    }
+  },
   data() {
     return {
       status: "进行中"
@@ -32,9 +56,22 @@ export default {
     type: {
       immediate: true,
       handler() {
-        console.log(this.top);
-        this.status = this.type === "order-underway" ? "进行中" : "订单已送达";
+        this.status = this.type === "order-underway" ? "进行中" : "订单已完成";
       }
+    }
+  },
+  methods: {
+    ...mapMutations('order',['COMMIT_GOOD']),
+    submit(_id){
+      axios.post('be/api/order/updata-status', {
+        _id:_id,
+        status: 2
+      }).then(data => {
+        if(data.data.code ===200 && data.data.data.nModified===1){
+          Toast('确认收货成功')
+          this.COMMIT_GOOD(_id)
+        }
+      })
     }
   }
 };
@@ -90,13 +127,6 @@ export default {
       line-height: 1.066667rem;
     }
     .comment-btn {
-      width: 1.453333rem;
-      height: 0.8rem;
-      display: inline-block;
-      line-height: 0.72rem;
-      border: 3px solid $base-them-color;
-      color: $base-them-color;
-      border-radius: 0.133333rem;
       float: right;
     }
   }

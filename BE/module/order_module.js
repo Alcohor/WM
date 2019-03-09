@@ -15,7 +15,7 @@ var Oreders = mongoose.model('order', new mongoose.Schema({
     createTime: Number,//创建时间
     finishTime: Number,//结束时间
     remark: String,//评论
-    status: Number,//订单状态 0已支付 1派送中 2已送达 3已确认收货
+    status: Number,//订单状态 0已支付 1派送中 2已确认收货
     IsReamrked: Boolean,//是否已评论
     isComplain: Boolean,// 是否被投诉
     complainContent:Boolean, //投诉内容

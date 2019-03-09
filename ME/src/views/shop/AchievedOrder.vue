@@ -52,7 +52,7 @@ export default {
     tableData(){
       let tableData = this.completedOrder.map(order => {
         let time = moment(order.createTime).format('YYYY-MM-DD HH:mm:ss')
-        let orderStatus = order.status === 0 ? '已收货' : '';
+        let orderStatus = order.status === 2 ? '交易已完成' : '';
         let orderList = ''
         order.list.forEach(item => {
           orderList += ` ${item.name} * ${item.num} ` 

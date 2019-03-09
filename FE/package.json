@@ -13,6 +13,7 @@
     "element-ui": "^2.4.9",
     "lodash": "^4.17.11",
     "mint-ui": "^2.2.13",
+    "moment": "^2.24.0",
     "socket.io": "^2.2.0",
     "socket.io-client": "^2.2.0",
     "uws": "^100.0.1",

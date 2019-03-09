@@ -10,8 +10,8 @@
                 class="type-switch-btn"
             >{{item.title}}</span>
         </div>
-        <order-list :type = "type" ></order-list>
-        {{finishedList}}/{{unfinishedList}}
+        <order-list :type = "type" :order-list="orderList" v-if="orderList.length"></order-list>
+        <p v-else style="margin-top:20px">暂无该类别订单</p>
         <app-nav></app-nav>
     </div>
 </template>
@@ -21,7 +21,7 @@ import CommonHeader from "@c/common/CommonHeader";
 import AppNav from "@c/layout/AppNav";
 import OrderList from "@c/layout/OrderList";
 import axios from 'axios'
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 export default {
   components: {
     CommonHeader,
@@ -30,6 +30,7 @@ export default {
   },
   computed:{
     ...mapGetters('user', ['userInfo']),
+    ...mapGetters('order', ['progressOrder','completedOrder']),
     unfinishedList(){
       let list = []
       this.list.forEach(element => {
@@ -48,7 +49,9 @@ export default {
       });
       return list
     },
-
+    orderList(){
+      return this. type === 'order-underway' ? this.progressOrder: this.completedOrder
+    }
   },
 
   data() {
@@ -63,14 +66,12 @@ export default {
       ]
     };
   },
-  created(){
-    axios.get('be/api/order/list',{params:{guestId:this.userInfo._id}}).then(
-      ({data}) => {
-        if(data.code===200){
-          this.list = data.data.orderList
-        }
-      }
-    )
+  methods:{
+    ...mapActions('order', ['GET_ORDERS'])
+  },
+  mounted(){
+    let guestId = this.userInfo._id
+    this.GET_ORDERS({guestId:guestId});
   }
 };
 </script>

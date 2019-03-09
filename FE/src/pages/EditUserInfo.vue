@@ -8,7 +8,7 @@
   <div style="width:90%; margin:0 auto;margin-top:20px">
       <mt-button size="large"  type="primary" @click="handleSave">保存</mt-button>
       <div style="height: 30px; width: 100%"></div>
-      <mt-button size="large"  type="danger">退出当前账号</mt-button>
+      <mt-button size="large"  type="danger" @click="logout">退出当前账号</mt-button>
   </div>
 </div>
 </template>
@@ -63,6 +63,14 @@ export default {
           }
         }
       )
+    },
+    logout(){
+      axios.get('be/m/api/admin/logout').then(
+        data =>{ if (data.data.code === 200) {
+          Toast('注销成功')
+          location.href='/login'
+        }
+      })
     }
   },
   mounted() {

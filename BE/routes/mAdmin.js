@@ -6,6 +6,8 @@ router.post('/regist', admin_controller.regist)
 router.post('/login', admin_controller.login)
 router.post('/edit', admin_controller.edit)
 router.get('/user-info', admin_controller.userInfo)
+router.get('/logout', admin_controller.logout)
+
 
 module.exports = router
 

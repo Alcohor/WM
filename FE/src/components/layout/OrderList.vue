@@ -1,6 +1,6 @@
 <template>
     <ul class="order-list"> 
-        <order-item :type ="type" ></order-item>
+        <order-item v-for="item of orderList" :key="item.id" :data="item" :type ="type" ></order-item>
     </ul>
 </template>
 
@@ -10,7 +10,7 @@ export default{
     components:{
         OrderItem
     },
-    props:['type']
+    props:['type', 'orderList']
 }
 </script>
 
