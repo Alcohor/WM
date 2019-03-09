@@ -1,6 +1,6 @@
 const order_module = require("../module/order_module")
 const {dataHandler} = require("../utils")
-
+const mAdmin_module = require('../module/mAdmin_module')
 
 
 const list = async(req,res)=>{
@@ -11,8 +11,11 @@ const list = async(req,res)=>{
 
 const create = async (req, res) => {
     res.set('content-type', 'application/json; charset=utf8')
-    let _data = await order_module.save(req.body); //获取所有电影数据的方法
-    dataHandler(_data, res, 'order') //返回的数据处理
+    let guest = await mAdmin_module.guestInfo(req.body.guestId);
+    delete guest[0]._id
+    delete guest[0].passWord
+    let data = await order_module.save(req.body,guest[0]); //获取所有电影数据的方法
+    dataHandler(data, res, 'order') //返回的数据处理
 }
 
 const getMovieInfoById = async (req, res) => {

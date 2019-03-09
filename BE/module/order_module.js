@@ -7,12 +7,15 @@ var Oreders = mongoose.model('order', new mongoose.Schema({
     shopId: String,//店铺Id
     shopName: String,//店铺名
     guestId: String,//顾客Id
+    nickName: String, // 顾客昵称
+    adress: Object, // 收货地址
+    phone:String, //客户电话
     sum: Number,// 金额
     list: Array,// 清单
     createTime: Number,//创建时间
     finishTime: Number,//结束时间
     remark: String,//评论
-    status: Number,//订单状态 0已支付 1派送中 2已送达
+    status: Number,//订单状态 0已支付 1派送中 2已送达 3已确认收货
     IsReamrked: Boolean,//是否已评论
     isComplain: Boolean,// 是否被投诉
     complainContent:Boolean, //投诉内容
@@ -45,11 +48,15 @@ const list = async(query)=>{
 
 
 let default_pic = '/uploads/posterPic/defaultPic.jpg'
-const _save = (data) => {//增加电影数据
+const save = (data,guest) => {
     let _timestamp = Date.now()
     let moment = Moment(_timestamp)
+    console.log(guest, 298)
     return new Oreders({
         ...data,
+        nickName: guest.nickName,
+        adress: guest.adress,
+        phone:guest.phone,
         createTime: _timestamp,
         createTimeFormat: moment.format("YYYY-MM-DD, hh:mm")
     }).save()
@@ -135,7 +142,7 @@ return Oreders.updateOne({ _id: body._id }, { ...body }).then((results) => {
 module.exports = {
     list:list,
     updata,
-    save: _save,//增加数据
+    save: save,//增加数据
     getById:getMovieInfoById,//根据ID取出数据
     delById:delMovieInfoById,//根据ID删除数据
     getByName:getMovieInfoByName,

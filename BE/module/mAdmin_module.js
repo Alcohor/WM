@@ -46,9 +46,18 @@ const userInfo = (req) => {
   if (!req.session.userinfo) {
     return []
   }
-  console.log(req.session.userinfo.userId, 9082)
   return MUserModel
   .find({ _id: req.session.userinfo.userId })
+  .then((results) => {
+      return results
+  })
+  .catch(() => {
+      return false
+  })
+} 
+const guestInfo = (id) => {
+  return MUserModel
+  .find({ _id: id })
   .then((results) => {
       return results
   })
@@ -81,6 +90,7 @@ module.exports={
     judgeUserByUsername,
     login,
     edit,
-    userInfo
+    userInfo,
+    guestInfo
 }
 
