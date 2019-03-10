@@ -14,7 +14,8 @@
                 <div class="goods-title">{{orderInfo}}</div>
                 <div class="order-price">￥{{data.sum}}</div>
             </div>
-            <mt-button  class="comment-btn" type="primary" size="small" v-if="type ==='order-complete'">去评价</mt-button>
+            <mt-button  class="comment-btn" type="primary" size="small" v-if="type ==='order-complete'&& !data.isReamrked" @click="toAssessment(data)">去评价</mt-button>
+            <span  class="comment-btn" v-else-if="data.isReamrked">已评价</span>
             <mt-button  class="comment-btn" type="primary" size="small" @click="submit(data._id)" v-else>确认收货</mt-button>
       </div>
    </div>
@@ -72,6 +73,9 @@ export default {
           this.COMMIT_GOOD(_id)
         }
       })
+    },
+    toAssessment(data){
+      this.$router.push({name:'assessment', params:{assessmentData: this.data}})
     }
   }
 };

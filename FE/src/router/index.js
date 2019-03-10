@@ -16,6 +16,7 @@ import RestIntro from '@c/layout/RestIntro'
 import EditUserInfo from '@pages/EditUserInfo'
 import MyAdress from '@pages/MyAdress'
 import CartPage from '@pages/CartPage'
+import Assessment from '@pages/Assessment'
 
 const routes = [
     {
@@ -56,6 +57,11 @@ const routes = [
         path:'/order',
         name:'order',
         component : Order,
+    },
+    {
+        path:'assessment',
+        name:'assessment',
+        component:Assessment
     },
     {
         path:'/mine',

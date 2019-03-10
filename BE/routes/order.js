@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const oreder = require('../controller/order_controller')
+const order = require('../controller/order_controller')
 const photoUpload = require('../middleware/photoUpload')
 
-router.get('/list',oreder.list)
-router.post('/create',oreder.create)
-router.post('/remark',oreder.remark)
-router.post('/updata-status',oreder.updataStatus)
-
+router.get('/list',order.list)
+router.post('/create',order.create)
+router.post('/remark',order.remark)
+router.post('/updata-status',order.updataStatus)
+router.post('/edit-order',order.edit)
 
 module.exports = router

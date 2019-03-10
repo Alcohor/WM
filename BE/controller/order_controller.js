@@ -42,6 +42,11 @@ const updataStatus = async (req, res) => {
     let _data = await order_module.updata(req.body);
     dataHandler(_data,res,'order')
 }
+const edit = async (req, res) => {
+    res.set('content-type', 'application/json; charset=utf8')
+    let _data = await order_module.updata(req.body);
+    dataHandler(_data,res,'order')
+}
 
 const remark = async (req, res) => {
     res.set('content-type', 'application/json; charset=utf8')
@@ -54,4 +59,5 @@ module.exports = {
     create,
     remark,
     updataStatus,
+    edit
 }
