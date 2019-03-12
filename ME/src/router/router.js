@@ -37,6 +37,12 @@ export const appRouter = [
             { path: '/newOrder', name: '新订单', component: resolve => { require(['@/views/shop/NewOrder'], resolve); }, meta: { isLogin: true, isAuth: true } },
             { path: '/progressOrder', name: '进行中订单', component: resolve => { require(['@/views/shop/ProgressOrder'], resolve); }, meta: { isLogin: true, isAuth: true } },
             { path: '/achievedOrder', name: '已完成订单', component: resolve => { require(['@/views/shop/AchievedOrder'], resolve); }, meta: { isLogin: true, isAuth: true } },
+            { path: '/activeInfoConfig', name: '活动信息管理', component: resolve => { require(['@/views/platform/activeInfoConfig'], resolve); }, meta: { isLogin: true, isAuth: true } },
+            { path: '/activePic', name: '活动封面管理', component: resolve => { require(['@/views/platform/activePic'], resolve); }, meta: { isLogin: true, isAuth: true } },
+            { path: '/handledComplaint', name: '已处理投诉', component: resolve => { require(['@/views/platform/handledComplaint'], resolve); }, meta: { isLogin: true, isAuth: true } },
+            { path: '/unhandleComplaint', name: '未处理投诉', component: resolve => { require(['@/views/platform/unhandleComplaint'], resolve); }, meta: { isLogin: true, isAuth: true } },
+            { path: '/ShopConfig', name: '商家信息维护', component: resolve => { require(['@/views/platform/ShopConfig'], resolve); }, meta: { isLogin: true, isAuth: true } },
+            { path: '/UserConfig', name: '用户管理', component: resolve => { require(['@/views/platform/UserConfig'], resolve); }, meta: { isLogin: true, isAuth: true } },
             { path: '/auth', name: '权限管理', component: resolve => { require(['@/views/system/Auth'], resolve); }, meta: { isLogin: true, isAuth: true } },
         ]
     }

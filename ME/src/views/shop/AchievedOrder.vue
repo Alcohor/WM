@@ -33,6 +33,11 @@
       label="客户手机号"
       width="120">
     </el-table-column>
+    <el-table-column
+      prop="remark"
+      label="客户评论"
+      width="300">
+    </el-table-column>
      <el-table-column
       prop="orderStatus"
       label="订单状态"

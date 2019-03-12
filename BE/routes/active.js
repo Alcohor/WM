@@ -8,6 +8,7 @@ router.post('/update', active_controller.update)
 router.post('/save-pic',photoUpload,active_controller.savePic)
 router.get('/pic',active_controller.pic)
 router.get('/info',active_controller.activeInfo)
+router.get('/list',active_controller.list)
 
 module.exports = router
 

@@ -39,6 +39,29 @@ const judgeUserByUsername = (_username) => {
         })
             
 }
+const list = () => {
+    return UserModel
+        .find()
+        .then((results) => {
+            return results
+        })
+        .catch(() => {
+            return false
+        })
+            
+}
+const update = (body) => {
+    console.log(body._id, 1012988)
+    return UserModel
+        .updateOne({_id:body._id}, body)
+        .then((results) => {
+            return results
+        })
+        .catch(() => {
+            return false
+        })
+            
+}
 
 const login =  (passWord, _passWord) => {
     return  bcrypt.compareSync(passWord, _passWord)
@@ -51,6 +74,8 @@ const login =  (passWord, _passWord) => {
 module.exports={
     regist,
     judgeUserByUsername,
-    login
+    login,
+    list,
+    update
 }
 

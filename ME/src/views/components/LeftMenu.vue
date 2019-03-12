@@ -17,34 +17,38 @@
           <span>首页</span>
         </template>
       </el-menu-item>
-      <el-submenu index="2">
+      <el-menu-item index="2" :route="{name: '用户管理'}">
+        <template slot="title">
+          <i class="el-icon-info"></i>
+          <span>用户管理</span>
+        </template>
+      </el-menu-item>
+      <el-submenu index="3">
         <template slot="title">
           <i class="el-icon-goods"></i>
           <span>商家管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="2-1">商铺下架</el-menu-item>
-          <el-menu-item index="2-2">商家信息维护</el-menu-item>
+          <el-menu-item index="3-1" :route="{name: '商家信息维护'}">商家信息维护</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-submenu index="3">
+      <el-submenu index="4">
         <template slot="title">
           <i class="el-icon-bell"></i>
           <span>活动管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="3-1">活动封面上架</el-menu-item>
-          <el-menu-item index="3-2">活动信息管理</el-menu-item>
+          <el-menu-item index="4-1" :route="{name: '活动信息管理'}">活动信息管理</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-submenu index="4">
+      <el-submenu index="5">
         <template slot="title">
           <i class="el-icon-warning"></i>
           <span>投诉管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="4-1">未处理投诉</el-menu-item>
-          <el-menu-item index="4-2">已处理投诉</el-menu-item>
+          <el-menu-item index="5-1" :route="{name: '未处理投诉'}">未处理投诉</el-menu-item>
+          <el-menu-item index="5-2" :route="{name: '已处理投诉'}">已处理投诉</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </template>

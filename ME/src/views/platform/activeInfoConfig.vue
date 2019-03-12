@@ -5,47 +5,32 @@
     style="width: 100%">
     <el-table-column
       fixed
-      prop="shopName"
-      label="店名">
+      prop="name"
+      label="活动名称">
     </el-table-column>
     <el-table-column
-      prop="foodsType"
-      label="菜系">
+      prop="type"
+      label="活动类型">
     </el-table-column>
     <el-table-column
-      prop="mark"
-      label="标签">
+      prop="start"
+      label="开始时间">
     </el-table-column>
     <el-table-column
-      prop="notice"
-      label="店铺简介">
+      prop="end"
+      label="结束时间">
     </el-table-column>
     <el-table-column
-      prop="time"
-      label="营业时间">
+      prop="shopId"
+      label="主办方店铺ID">
     </el-table-column>
     <el-table-column
-      prop="packageCost"
-      label="包装费">
+      prop="desc"
+      label="活动描述">
     </el-table-column>
-    <el-table-column
-      prop="deliveryCost"
-      label="配送费">
-    </el-table-column>
-    <el-table-column
-      prop="startCost"
-      label="起送金额">
-    </el-table-column>
-    <el-table-column
-      prop="shopStatus"
-      label="状态">
-    </el-table-column>
-    <el-table-column
-      fixed="right"
-      label="操作">
+    <el-table-column>
       <template slot-scope="scope">
-        <el-button @click="edit(scope.row)" type="text" size="small">下架</el-button>
-        <el-button @click="edit(scope.row)" type="text" size="small">上架</el-button>
+        <el-button @click="edit(scope.row)" type="text" size="small">删除活动</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -79,7 +64,7 @@
       }
     },
     mounted(){
-      axios.get('/be/api/shop/list').then(
+      axios.get('/be/api/active/list').then(
         data => {
           if(data.data.code === 200) {
             this.fetchdata = data.data.data

@@ -20,6 +20,16 @@ const regist = async (req,res,next)=>{
         res.render('admin',result)
     }
 }
+const list = async (req,res,next)=>{
+    let result = await admin_module.list()
+    dataHandler(result,res,'admin')//返回的数据处理
+    
+}
+const update = async (req,res,next)=>{
+    let result = await admin_module.update(req.body)
+    dataHandler(result,res,'admin')//返回的数据处理
+    
+}
 
 const login = async(req,res,next)=>{
     var _judge_result = await admin_module.judgeUserByUsername(req.body.userName);
@@ -69,5 +79,7 @@ module.exports={
     regist,
     login,
     isLogin,
-    logout
+    logout,
+    list,
+    update
 }
