@@ -4,7 +4,7 @@
     <div class="wrap">
         <mt-cell v-for="shopInfo in shopData" :key="shopInfo._id" :title="'店铺名：'+shopInfo.shopName">
             <span></span>
-            <mt-button size="small" type="danger" @click="submit(shopInfo._id)">投诉</mt-button>
+            <mt-button size="small" type="danger" @click="submit(shopInfo)">投诉</mt-button>
         </mt-cell>
     </div>
   </div>
@@ -49,8 +49,24 @@ export default {
         }
       )
     },
-    submit(id) {
-
+    submit(shopInfo) {
+      MessageBox.prompt('请输入您的投诉原因').then(({ value, action }) => {
+        console.log(this.userInfo)
+        let {_id: guestId, nickName:guestName, phone: guestPhone} = this.userInfo;
+        let {shopName, _id: shopId } = shopInfo;
+        axios.post('/be/api/complain/create', {
+          shopId,
+          content:value,
+          guestPhone,
+          shopName,
+          guestId,
+          guestName
+          }).then(data => {
+            if(data.data.code === 200) {
+              Toast('您的投诉已发送')
+            }
+          })
+        }); 
     }
   },
   components: {

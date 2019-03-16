@@ -14,6 +14,7 @@ var food =  require('./routes/foods')
 var order = require('./routes/order.js')
 var active = require('./routes/active')
 var session = require('express-session')
+var complain = require('./routes/compliain')
 
 var mAdmin = require('./routes/mAdmin')
 
@@ -50,6 +51,7 @@ app.use('/api/shop', shop)
 app.use('/api/movies', movies)
 app.use('/api/active', active)
 app.use('/api/foods', food)
+app.use('/api/complain', complain)
 
 app.use('/m/api/admin', mAdmin)
 app.use('/api/order', order)

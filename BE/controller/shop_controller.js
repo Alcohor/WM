@@ -101,7 +101,6 @@ const orderShop = async (req,res) =>{
     let guestId = req.session.userinfo.userId
     let orderList = await order_moudle.list({guestId})
     let shopList = await shop_module.list();
-    console.log(orderList, shopList)
     let list = []
     orderList.orderList.forEach(order => {
         let shop = shopList.filter(shop => {
