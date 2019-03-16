@@ -23,15 +23,12 @@
           <span>用户管理</span>
         </template>
       </el-menu-item>
-      <el-submenu index="3">
-        <template slot="title">
-          <i class="el-icon-goods"></i>
-          <span>商家管理</span>
-        </template>
-        <el-menu-item-group>
-          <el-menu-item index="3-1" :route="{name: '商家信息维护'}">商家信息维护</el-menu-item>
-        </el-menu-item-group>
-      </el-submenu>
+        <el-menu-item index="3" :route="{name: '商家信息维护'}">
+          <template slot="title">
+            <i class="el-icon-goods"></i>
+            <span>商家信息维护</span>
+          </template>
+        </el-menu-item>
       <el-submenu index="4">
         <template slot="title">
           <i class="el-icon-bell"></i>

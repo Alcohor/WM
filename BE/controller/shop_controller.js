@@ -1,7 +1,8 @@
 
 //引入module层
 const shop_module = require('../module/shop_module')
-
+const order_moudle = require('../module/order_module')
+const _ = require('lodash')
 //引入错误处理
 const {dataHandler} = require("../utils")
 
@@ -20,13 +21,17 @@ const id = async (req,res) => {
         })
         return
     }
-    console.log(1)
     let _data = await shop_module.id({administratorId: req.session.userinfo.userId});
     dataHandler(_data,res,'shop')//返回的数据处理
 }
 const shopInfoById = async (req,res) => {
     res.set('content-type','application/json;charset=utf8')
     let _data = await shop_module.selectID(req.query);
+    dataHandler(_data,res,'shop')//返回的数据处理
+}
+const status = async (req,res) => {
+    res.set('content-type','application/json;charset=utf8')
+    let _data = await shop_module.status(req);
     dataHandler(_data,res,'shop')//返回的数据处理
 }
 
@@ -86,6 +91,30 @@ const update = async (req,res) =>{
     let _data = await shop_module.update(req);
     dataHandler(_data,res,'shop')//返回的数据处理
 }
+const editShop = async (req,res) =>{
+    res.set('content-type','application/json;charset=utf8')
+    let _data = await shop_module.editShop(req.body);
+    dataHandler(_data,res,'shop')//返回的数据处理
+}
+const orderShop = async (req,res) =>{
+    res.set('content-type','application/json;charset=utf8')
+    let guestId = req.session.userinfo.userId
+    let orderList = await order_moudle.list({guestId})
+    let shopList = await shop_module.list();
+    console.log(orderList, shopList)
+    let list = []
+    orderList.orderList.forEach(order => {
+        let shop = shopList.filter(shop => {
+            return shop._id == order.shopId;
+        })
+        if (shop.length) {
+            list.push(shop[0])
+        }
+    })
+    list = _.uniqWith(list, _.isEqual);
+
+    dataHandler(list,res,'shop')//返回的数据处理
+}
 
 module.exports = {
     list,
@@ -96,5 +125,8 @@ module.exports = {
     saveAvatar,
     remove,
     selectID,
-    update
+    update,
+    status,
+    editShop,
+    orderShop
 }

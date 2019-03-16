@@ -25,7 +25,7 @@
     <div class="menu-wrap">
       <mine-link :info="{title:'我的信息',icon:'fa-id-card',color:'#94D94A'}" @click.native.stop="toUserInfo('user-info')"></mine-link>
       <mine-link :info="{title:'我的地址',icon:'fa-paper-plane',color:'#4AA5F0'}" @click.native.stop="toUserInfo('adress')"></mine-link>
-      <mine-link :info="{title:'投诉店铺',icon:'fa-thumbs-down',color:'#CB3848'}"></mine-link>
+      <mine-link :info="{title:'投诉店铺',icon:'fa-thumbs-down',color:'#CB3848'}" @click.native.stop="toUserInfo('complaint')"></mine-link>
     </div>
     <app-nav></app-nav>
   </div>

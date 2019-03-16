@@ -49,7 +49,7 @@ const savePic = async (req,res) =>{
 //删除活动信息
 const remove = async (req,res) =>{
     res.set('content-type','application/json;charset=utf8')
-    let _data = await active_module.remove(req.query);
+    let _data = await active_module.remove(req.body);
     dataHandler(_data,res,'active')//返回的数据处理
 }
 

@@ -117,6 +117,24 @@ const  update = (req) =>{
       return false;
     });
 }
+const editShop= (body) =>{
+  return Shop.updateOne({ _id: body._id }, body)
+    .then((results) => {
+      return results
+    })
+    .catch((err) => {
+      return false;
+    });
+}
+const status = (req) =>{
+  return Shop.updateOne({ _id: req.body._id }, req.body) 
+    .then((results) => {
+      return results
+    })
+    .catch((err) => {
+      return false;
+    });
+}
 
 module.exports = {
   list,
@@ -126,5 +144,7 @@ module.exports = {
   save,
   remove,
   selectID,
-  update
+  update,
+  status,
+  editShop
 };

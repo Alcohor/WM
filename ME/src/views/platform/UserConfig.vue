@@ -41,7 +41,6 @@
             <el-option label="商铺管理员" :value="2"></el-option>
           </el-select>
         </el-form-item>
-        {{user}}
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>

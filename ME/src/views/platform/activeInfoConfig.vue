@@ -30,7 +30,7 @@
     </el-table-column>
     <el-table-column>
       <template slot-scope="scope">
-        <el-button @click="edit(scope.row)" type="text" size="small">删除活动</el-button>
+        <el-button @click="remove(scope.row)" type="text" size="small">删除活动</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -42,6 +42,25 @@
     methods: {
       handleClick(row) {
         console.log(row);
+      },
+      remove(row){
+        axios.post('/be/api/active/remove', {...row}).then(
+          data => {
+            if (data.data.code = 200) {
+              this.$message.success('删除成功')
+              this.fetchData();
+            }
+          }
+        )
+      },
+      fetchData() {
+        axios.get('/be/api/active/list').then(
+        data => {
+          if(data.data.code === 200) {
+            this.fetchdata = data.data.data
+          }
+        }
+      )
       }
     },
     computed:{
@@ -58,19 +77,8 @@
         fetchdata : [],
       }
     },
-    methods:{
-      edit(){
-
-      }
-    },
     mounted(){
-      axios.get('/be/api/active/list').then(
-        data => {
-          if(data.data.code === 200) {
-            this.fetchdata = data.data.data
-          }
-        }
-      )
+      this.fetchData();
     }
   }
 </script>

@@ -43,8 +43,6 @@ const list = async(query)=>{
     }).catch(err=>{
         return false
     })
-
-
 }
 
 

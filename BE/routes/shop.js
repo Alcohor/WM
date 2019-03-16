@@ -14,5 +14,9 @@ router.get('/remove', shop_controller.remove);
 router.get('/selectID', shop_controller.selectID);
 router.post('/update', shop_controller.update);
 router.get('/id', shop_controller.id);
+router.get('/order-shop', shop_controller.orderShop);
+router.post('/status', shop_controller.status)
+router.post('/editShop', shop_controller.editShop)
+router.post('/complaint', shop_controller.update)
 
 module.exports = router;

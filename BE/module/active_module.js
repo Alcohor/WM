@@ -81,11 +81,10 @@ const savePic = async(req) => {
     });
   }
 
-//删除店铺信息
-const remove = ( { id } ) => {//传入iD删除这条信息
+const remove = ( { _id } ) => {//传入iD删除这条信息
   //数据库操作删除，active是数据库模板
    //数据库中存的是_id所以要找到_id中的id
-  return active.deleteOne({ _id: id }).then( (results) => {
+  return Active.deleteOne({ _id: _id }).then( (results) => {
     results.deleteid = id //找到这个id
     return results;
   }).catch( (err) => {
