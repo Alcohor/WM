@@ -35,7 +35,8 @@
           <span>活动管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="4-1" :route="{name: '活动信息管理'}">活动信息管理</el-menu-item>
+          <el-menu-item index="4-1" :route="{name:'优惠活动上架'}">活动优惠上架</el-menu-item>
+          <el-menu-item index="4-2" :route="{name: '活动信息管理'}">活动信息管理</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-submenu index="5">
@@ -61,7 +62,7 @@
         </template>
         <el-menu-item-group>
           <el-menu-item index="2-1" :route="{name:'店铺信息维护'}">店铺信息维护</el-menu-item>
-          <el-menu-item index="2-2" :route="{name:'优惠活动上架'}">活动优惠上架</el-menu-item>
+          <!-- <el-menu-item index="2-2" :route="{name:'优惠活动上架'}">活动优惠上架</el-menu-item> -->
         </el-menu-item-group>
       </el-submenu>
       <el-submenu index="3">

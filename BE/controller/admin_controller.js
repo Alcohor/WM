@@ -33,19 +33,25 @@ const update = async (req,res,next)=>{
 
 const login = async(req,res,next)=>{
     var _judge_result = await admin_module.judgeUserByUsername(req.body.userName);
-    console.log(_judge_result,9098)
     if (!!_judge_result.length) {
         let isPwdRight = await admin_module.login(req.body.passWord, _judge_result[0].passWord)
         if (isPwdRight) {
-            req.session.userinfo = {
-                userId: _judge_result[0]._id,
-                permission: _judge_result[0].permission || 1,
-                nickName: _judge_result[0].nickName,
-                userType: _judge_result[0].userType
+            if(_judge_result[0].status === 0 || _judge_result[0].userType === 1) {
+                req.session.userinfo = {
+                    userId: _judge_result[0]._id,
+                    permission: _judge_result[0].permission || 1,
+                    nickName: _judge_result[0].nickName,
+                    userType: _judge_result[0].userType
+                }
+                res.cookie('nickName', _judge_result[0].nickName)
+                res.cookie('userId', _judge_result[0]._id)
+                res.render('admin',{code:200,data:JSON.stringify('登录成功')})
+            } else if (_judge_result[0].status === 1) {
+                res.render('admin',{code:203,data:JSON.stringify('您的账号尚未激活，请等待')})
+            } else if (_judge_result[0].status === 2) {
+                res.render('admin',{code:204,data:JSON.stringify('您的账号已被封停')})
             }
-            res.cookie('nickName', _judge_result[0].nickName)
-            res.cookie('userId', _judge_result[0]._id)
-            res.render('admin',{code:200,data:JSON.stringify('登录成功')})
+            
         }else{
             res.render('admin',{code:201,data:JSON.stringify('密码错误')})
         }

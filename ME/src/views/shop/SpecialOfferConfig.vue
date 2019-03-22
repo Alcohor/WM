@@ -1,10 +1,6 @@
 <template>
   <div>
-    <div v-if="!active._id">
-      您还没有创建任何活动，
-      <el-button type="text" @click="create">+创建一个活动</el-button>
-    </div>
-    <el-form v-else ref="form" :model="active" label-width="80px">
+    <el-form ref="form" :model="active" label-width="80px">
       <el-form-item label="活动名称">
         <el-input v-model="active.name"></el-input>
       </el-form-item>
@@ -112,9 +108,9 @@ export default {
         )
       }
   },
-  created(){
-    this.getActiveList()
-  }
+  // created(){
+  //   this.getActiveList()
+  // }
 };
 </script>
 

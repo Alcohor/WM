@@ -127,6 +127,7 @@ const editShop= (body) =>{
     });
 }
 const status = (req) =>{
+  console.log(req.body,11111)
   return Shop.updateOne({ _id: req.body._id }, req.body) 
     .then((results) => {
       return results

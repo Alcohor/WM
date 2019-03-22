@@ -11,12 +11,21 @@
         <el-form-item prop="passWord">
             <el-input type="password" v-model="registeForm.passWord" auto-complete="off" placeholder="请输入密码" @keyup.enter.native="registeIn"></el-input>
         </el-form-item>
-        <el-form-item prop="userType">
+        <el-form-item prop="realName">
+            <el-input type="text" v-model="registeForm.realName" auto-complete="off" placeholder="真实姓名" @keyup.enter.native="registeIn"></el-input>
+        </el-form-item>
+        <el-form-item prop="phone">
+            <el-input type="text" v-model="registeForm.phone" auto-complete="off" placeholder="手机号码" @keyup.enter.native="registeIn"></el-input>
+        </el-form-item>
+        <el-form-item prop="idCard">
+            <el-input type="text" v-model="registeForm.idCard" auto-complete="off" placeholder="身份证号" @keyup.enter.native="registeIn"></el-input>
+        </el-form-item>
+        <!-- <el-form-item prop="userType">
            <el-select v-model="registeForm.userType" placeholder="请选择账号类型">
             <el-option label="平台管理员" :value="1"></el-option>
             <el-option label="店铺管理员" :value="2"></el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-checkbox v-model="checked" class="remember">记住密码</el-checkbox>
         <el-form-item style="width:100%;margin-top:10px;">
             <el-button type="primary" style="width:100%;" @click.native.prevent="handleRegiste" :loading="registeing">注册</el-button>
@@ -37,7 +46,11 @@ export default {
         nickName: '',
         userName: '',
         passWord: '',
-        userType: null
+        userType: 2,
+        realName:'',
+        idCard: '',
+        phone: '',
+        status: 1,
       },
       registeRules: {
         nickName: [
@@ -49,8 +62,14 @@ export default {
         passWord: [
           { required: true, message: '请输入密码', trigger: 'blur' }
         ],
-        userType: [
-          { required: true, message: '请选择用户类型', trigger: 'blur' }
+        realName: [
+          { required: true, message: '请输入真实姓名', trigger: 'blur' }
+        ],
+        phone: [
+          { required: true, message: '请输入手机号码', trigger: 'blur' }
+        ],
+        idCard: [
+          { required: true, message: '请输入身份证号', trigger: 'blur' }
         ]
       },
       checked: false
@@ -72,17 +91,13 @@ export default {
             return false;
           }
           axios.post('/be/api/admin/registe', {
-            nickName: this.registeForm.nickName, 
-            userName: this.registeForm.userName, 
-            passWord: this.registeForm.passWord, 
-            userType: this.registeForm.userType
+            ...this.registeForm
             }).then(data => {
               if (data.data.code === 200) {
-                this.$message.success('注册成功')
+                this.$message.success('注册成功，请等待审核')
                 this.$router.push({name: 'login'})
               } else {
                 this.$message.error(data.data.data);
-                
               }
             } )
           // requestregiste(registeParams).then(data => {

@@ -14,6 +14,10 @@
       label="菜系">
     </el-table-column>
     <el-table-column
+      prop="stars"
+      label="星级">
+    </el-table-column>
+    <el-table-column
       prop="mark"
       label="标签">
     </el-table-column>
@@ -58,10 +62,13 @@
   :before-close="handleClose">
   <el-form ref="form" :model="shopInfo" label-width="80px">
       <el-form-item label="店铺名称">
-        <el-input v-model="shopInfo.shopName" placeholder="请输入内容"></el-input>
+        <el-input v-model="shopInfo.shopName" placeholder="请输入内容" disabled></el-input>
       </el-form-item>
-      <el-form-item label="菜系">
-        <el-select v-model="shopInfo.foodsType" placeholder="请选择店铺菜系">
+      <el-form-item label="星级">
+        <el-rate v-model="shopInfo.stars"></el-rate>
+      </el-form-item>
+      <el-form-item label="菜系" >
+        <el-select v-model="shopInfo.foodsType" placeholder="请选择店铺菜系" disabled>
           <el-option label="川菜" value="川菜"></el-option>
           <el-option label="鲁菜" value="鲁菜"></el-option>
           <el-option label="粤菜" value="粤菜"></el-option>
@@ -74,7 +81,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="店铺标签">
-        <el-checkbox-group v-model="shopInfo.mark">
+        <el-checkbox-group v-model="shopInfo.mark" disabled>
           <el-checkbox label="#便当/快餐" name="1"></el-checkbox>
           <el-checkbox label="#火锅/串串" name="2"></el-checkbox>
           <el-checkbox label="#面食/米粉" name="3"></el-checkbox>
@@ -85,20 +92,21 @@
         </el-checkbox-group>
       </el-form-item>
       <el-form-item label="即时配送">
-        <el-switch v-model="shopInfo.delivery"></el-switch>
+        <el-switch v-model="shopInfo.delivery" disabled></el-switch>
       </el-form-item>
       <el-form-item label="起送金额">
-        <el-input-number  size="small" v-model="shopInfo.startCost" label="起送金额"></el-input-number>
+        <el-input-number  size="small" v-model="shopInfo.startCost" label="起送金额" disabled></el-input-number>
       </el-form-item>
       <el-form-item label="配送费">
-        <el-input-number  size="small" v-model="shopInfo.deliveryCost" label="起送金额"></el-input-number>
+        <el-input-number  size="small" v-model="shopInfo.deliveryCost" label="起送金额" disabled></el-input-number>
       </el-form-item>
       <el-form-item label="包装费">
-        <el-input-number  size="small" v-model="shopInfo.packageCost" label="包装费"></el-input-number>
+        <el-input-number  size="small" v-model="shopInfo.packageCost" label="包装费" disabled></el-input-number>
       </el-form-item>
       <el-form-item label="营业时间">
         <el-time-select
           placeholder="起始时间"
+          disabled
           v-model="shopInfo.startTime"
           :picker-options="{
             start: '00:00',
@@ -107,6 +115,7 @@
           }">
         </el-time-select>
         <el-time-select
+          disabled
           placeholder="结束时间"
           v-model="shopInfo.endTime"
           :picker-options="{
@@ -118,7 +127,7 @@
         </el-time-select>
       </el-form-item>
       <el-form-item label="店铺公告">
-        <el-input type="textarea" v-model="shopInfo.notice"></el-input>
+        <el-input type="textarea" v-model="shopInfo.notice" disabled></el-input>
       </el-form-item>
     </el-form>
   <span slot="footer" class="dialog-footer">

@@ -53,10 +53,11 @@ export default {
       MessageBox.prompt('请输入您的投诉原因').then(({ value, action }) => {
         console.log(this.userInfo)
         let {_id: guestId, nickName:guestName, phone: guestPhone} = this.userInfo;
-        let {shopName, _id: shopId } = shopInfo;
+        let {shopName, _id: shopId, starts } = shopInfo;
         axios.post('/be/api/complain/create', {
           shopId,
           content:value,
+          starts,
           guestPhone,
           shopName,
           guestId,

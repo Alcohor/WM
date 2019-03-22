@@ -10,19 +10,30 @@
         label="昵称">
       </el-table-column>
       <el-table-column
-        prop="_id"
-        label="ID">
+        fixed
+        prop="realName"
+        label="真实姓名">
       </el-table-column>
       <el-table-column
-        prop="type"
-        label="用户类型">
+        fixed
+        prop="phone"
+        label="手机号码">
+      </el-table-column>
+      <el-table-column
+        prop="idCard"
+        label="身份证号">
+      </el-table-column>
+      <el-table-column
+        prop="status"
+        label="账号状态"
+        :formatter="formatterStatus"
+        >
       </el-table-column>
       <el-table-column
         fixed="right"
         label="操作">
         <template slot-scope="scope">
           <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="edit(scope.row)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -32,13 +43,23 @@
       width="30%"
       :before-close="handleClose">
      <el-form ref="form" :model="user" label-width="80px">
-        <el-form-item label="用户昵称">
-          <el-input v-model="user.nickName"></el-input>
+        <el-form-item label="用户昵称:">
+          <div>{{user.nickName}}</div>
         </el-form-item>
-        <el-form-item label="用户类型">
-          <el-select v-model="user.userType" placeholder="请选择活动区域">
-            <el-option label="平台管理员" :value="1"></el-option>
-            <el-option label="商铺管理员" :value="2"></el-option>
+        <el-form-item label="真实姓名:">
+          <div>{{user.realName}}</div>
+        </el-form-item>
+        <el-form-item label="身份证号:">
+          <div>{{user.idCard}}</div>
+        </el-form-item>
+        <el-form-item label="手机号码:">
+          <div>{{user.phone}}</div>
+        </el-form-item>
+        <el-form-item label="账号状态:">
+          <el-select v-model="user.status" placeholder="请选择活动区域">
+            <el-option label="待激活" :value="0"></el-option>
+            <el-option label="正常" :value="1"></el-option>
+            <el-option label="封禁" :value="2"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -53,16 +74,10 @@
 <script>
   import axios from 'axios'
   export default {
-    methods: {
-      handleClick(row) {
-        console.log(row);
-      }
-    },
     computed:{
       tableData(){
-        return this.fetchdata.map(element => {
-          let type = element.userType === 1 ? '平台管理员' : '商铺管理员'
-          return {...element, type}    
+        return this.fetchdata.filter(element => {
+          return element.userType !== 1 
         })
       }
     },
@@ -89,6 +104,11 @@
            }
          )
       },
+      formatterStatus(row){
+        console.log(row)
+        let statusName = ['待激活', '正常','已封禁']
+        return statusName[row.status]
+      },
       handleClose(){
         this.user = {
           nickName:'',
@@ -99,9 +119,7 @@
       },
       edit(row){
         this.dialogVisible = true;
-        this.user.nickName = row.nickName;
-        this.user.userType = row.userType;
-        this.user._id = row._id
+        this.user = {...row}
       },
       fetchData(){
         axios.get('/be/api/admin/list').then(

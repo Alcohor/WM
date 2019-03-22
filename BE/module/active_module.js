@@ -11,7 +11,6 @@ var Active = mongoose.model("actives",new mongoose.Schema({
     name: String, // 活动时间
     desc: String, // 活动描述
     start: String, // 开始时间ID
-    shopId: String, // 店铺ID
   })
 );
 
@@ -71,8 +70,8 @@ const save = (body) => {
 };
 const savePic = async(req) => {
   req.body.pic ='http://localhost:9090' + req.body.pic
-  let id = await shop.id({administratorId: req.session.userinfo.userId})
-  return Active.updateOne({ shopId: id }, req.body)
+  console.log(req)
+  return Active.updateOne({ _id: req.body._id }, req.body)
     .then((results) => {
       return results
     })
@@ -108,7 +107,7 @@ const selectID = ({ id }) =>{
 
 //修改表单提交
 const  update = (req) =>{
-  return Active.updateOne({ shopId: req.body.shopId }, req.body)
+  return Active.updateOne({ _id: req.body.id }, req.body)
     .then((results) => {
       console.log(results,198)
       return results

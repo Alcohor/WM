@@ -7,17 +7,25 @@ var UserModel = mongoose.model('users',new mongoose.Schema({
     userName:String,
     passWord:String,
     nickName:String,
-    userType:Number
+    userType:Number,
+    realName:String,
+    phone:String,
+    idCard:String,
+    status:Number // 0正常 1待激活 2封禁
 }))
 
-const regist = async ({userName,passWord,nickName,userType}) => {
+const regist = async ({userName,passWord,nickName,userType,phone,realName,status,idCard}) => {
     let _pwd = hash(passWord);
     
 return new UserModel({
     userName:userName,
     passWord:_pwd,
     nickName:nickName,
-    userType:userType
+    userType:userType,
+    phone,
+    realName,
+    status,
+    idCard
 }).save()
 .then((results)=>{
     let{_id,nickName,userName,userType} = results;

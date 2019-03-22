@@ -26,14 +26,12 @@ const activeInfo = async (req,res) => {
 //创建活动
 const create = async (req,res) =>{
     res.set('content-type','application/json;charset=utf8')
-    let shopInfo = await shop_module.shopInfo({ administratorId:req.session.userinfo.userId })
     let _data = await active_module.save({
     pic: '',
     start: '', //开始时间ID
     end: '',//结束时间
     type: '',// 活动类型
     desc: '',// 活动描述
-    shopId: req.body.shopId,//店铺ID
     });
     //判断是否插入成功
     dataHandler(_data,res,'active')//返回的数据处理 
