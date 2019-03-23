@@ -57,8 +57,8 @@
         </el-form-item>
         <el-form-item label="账号状态:">
           <el-select v-model="user.status" placeholder="请选择活动区域">
-            <el-option label="待激活" :value="0"></el-option>
-            <el-option label="正常" :value="1"></el-option>
+            <el-option label="待激活" :value="1"></el-option>
+            <el-option label="正常" :value="0"></el-option>
             <el-option label="封禁" :value="2"></el-option>
           </el-select>
         </el-form-item>
@@ -106,7 +106,7 @@
       },
       formatterStatus(row){
         console.log(row)
-        let statusName = ['待激活', '正常','已封禁']
+        let statusName = ['正常', '待激活','已封禁']
         return statusName[row.status]
       },
       handleClose(){

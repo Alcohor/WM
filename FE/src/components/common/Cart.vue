@@ -36,6 +36,7 @@ export default {
     },
     data(){
         return {
+            dialogVisible: false,
             isCartListShow:false,
             classNameColor:"cart empty",
             classNameCart:"car-icon-wrap"

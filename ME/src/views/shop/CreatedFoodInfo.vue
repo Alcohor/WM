@@ -5,7 +5,7 @@
       <el-upload
         class="avatar-uploader"
         ref="pic"
-        :data="this.foodsInfo._id"
+        :data="{_id: this.foodsInfo._id}"
         action="/be/api/foods/save-pic"
         :show-file-list="false"
         :on-success="handleSuccess"
@@ -23,13 +23,13 @@
             <el-input-number v-model="foodsInfo.price" :min="0"></el-input-number>
           </el-col>
         </el-form-item>
-        <el-form-item label="餐食类型">
+        <el-form-item label="餐食标签">
           <el-checkbox-group v-model="foodsInfo.type">
-            <el-checkbox label="火锅/汤锅" name="1"></el-checkbox>
-            <el-checkbox label="快餐/速食" name="2"></el-checkbox>
-            <el-checkbox label="炒菜/炖菜" name="3"></el-checkbox>
-            <el-checkbox label="面食/米粉" name="4"></el-checkbox>
-            <el-checkbox label="烧烤/炸串" name="5"></el-checkbox>
+            <el-checkbox label="网红小食" name="1"></el-checkbox>
+            <el-checkbox label="地方特色" name="2"></el-checkbox>
+            <el-checkbox label="特色美食" name="3"></el-checkbox>
+            <el-checkbox label="健康养颜" name="4"></el-checkbox>
+            <el-checkbox label="家常美味" name="5"></el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="餐食信息">
@@ -72,12 +72,16 @@ export default {
       return isJPG && isLt2M;
     },
     createFood() {
+      this.foodsInfo = {}
       axios.post("/be/api/foods/create", { shopId: this.shopId, }).then(data => {
         this.foodsInfo = data.data.data;
+        console.log(this.foodsInfo,999)
       });
     },
     onSubmit() {
-      axios.post("/be/api/foods/update", { ...this.foodsInfo }).then(data => {
+      let foodsInfo  = {...this.foodsInfo}
+      delete foodsInfo.pic;
+      axios.post("/be/api/foods/update", { ...foodsInfo }).then(data => {
         if(data.data.code ===200){
           this.foodsInfo = null
           this.$message.success('上架成功');

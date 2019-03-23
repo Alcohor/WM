@@ -20,8 +20,21 @@
                 <span class="extra-cost">另需需配送费6元</span>
             </div>
         </div>
-        <div class="payment-btn" @click="pay">去结算</div>
+        <div class="payment-btn" @click="dialogVisible = true">去结算</div>
     </div>
+    <el-dialog
+        title="提示"
+        :visible.sync="dialogVisible"
+        width="90%">
+        <div>
+            <p>请使用支付宝扫描下方二维码完成付款</p>
+            <img src="../assets/pay.png" style="width: 50%" alt="">
+        </div>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">不买了</el-button>
+            <el-button type="primary" @click="pay">已付款</el-button>
+        </span>
+        </el-dialog>
 </div>
 </template>
 
@@ -34,6 +47,7 @@ import {Toast} from 'mint-ui'
 export default {
   data(){
     return {
+        dialogVisible: false,
       baseUserInfo: {
         nickName: '',
         phone:''
