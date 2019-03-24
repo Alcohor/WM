@@ -1,28 +1,27 @@
 <template>
   <section>
     <el-row :gutter="20" style="padding:10px;">
-      <el-col :span="6">
+      <el-col :span="12">
         <el-card style="height:230px;">
           <div>
             <span>总销售额</span>
           </div>
           <br>
           <div>
-            <span style="font-family:Arial;font-size:30px;">￥1600131.30</span>
-            <span style="font-family:PingFang SC;font-size:14px;">同比上涨100%</span>
-            <span style="font-family:PingFang SC;font-size:14px;">日均销售额 ￥16001.00</span>
+            <span style="font-family:Arial;font-size:30px;">￥{{allSum.toFixed(2)}}</span>
+            <span style="font-family:PingFang SC;font-size:14px;">总订单量：{{allOrder.length}}笔</span>
           </div>
         </el-card>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="12">
         <el-card style="height:230px;">
           <div style="height:10px;">
-            <span>访问来源</span>
+            <span>销售来源</span>
           </div>
           <div id="sitein" style="height:200px;"></div>
         </el-card>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="12">
         <el-card style="height:230px;">
           <div>
             <span>访问量</span>
@@ -86,10 +85,12 @@
 
 <script>
 import echarts from "echarts";
-import { mapActions } from 'vuex'
+import axios from 'axios'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
     return {
+      allOrder: [],
       activeName: "first",
       dataTable: [
         {
@@ -123,13 +124,38 @@ export default {
       ]
     };
   },
+  computed: {
+    ...mapGetters('user', ['userInfo']),
+    allSum() {
+      let allSum = 0
+      this.allOrder.forEach(order => {
+       allSum += order.sum
+      });
+      return allSum
+    },
+    shopDada() {
+      let info = {}
+      let arr = []
+      this.allOrder.forEach(order => {
+        if (info[order.shopId]) {
+          info[order.shopId] += order.sum
+        } else {
+          info[order.shopId] = order.sum
+        }
+      })
+      for (let key in info) {
+        arr.push({name: key, value: info[key].toFixed(2)})
+      }
+      return arr
+    }
+  },
   methods: {
     drawLine() {
       // 基于准备好的dom，初始化echarts实例
       let siteIn = echarts.init(document.getElementById("sitein"));
       let siteCount = echarts.init(document.getElementById("sitecount"));
-      let chartSale = echarts.init(document.getElementById("chartSale"));
-      let customer = echarts.init(document.getElementById("customer"));
+      // let chartSale = echarts.init(document.getElementById("chartSale"));
+      // let customer = echarts.init(document.getElementById("customer"));
     
       // 绘制图表
       siteIn.setOption({
@@ -137,13 +163,7 @@ export default {
           {
             type: "pie",
             radius: "55%",
-            data: [
-              { value: 235, name: "百度" },
-              { value: 274, name: "广告联盟" },
-              { value: 310, name: "自主访问" },
-              { value: 335, name: "google" },
-              { value: 400, name: "其他" }
-            ]
+            data: this.shopDada
           }
         ]
       });
@@ -218,124 +238,136 @@ export default {
       });
 
       // 绘制图表
-      customer.setOption({
-        visualMap: {
-          top: "middle",
-          right: 10,
-          color: ["red", "yellow"]
-        },
-        radar: {
-          indicator: [
-            { text: "10-20", max: 400 },
-            { text: "20-30", max: 400 },
-            { text: "30-40", max: 400 },
-            { text: "40-50", max: 400 },
-            { text: "50以上", max: 400 }
-          ]
-        },
-        series: (function() {
-          var series = [];
-          for (var i = 1; i <= 28; i++) {
-            series.push({
-              type: "radar",
-              symbol: "none",
-              itemStyle: {
-                normal: {
-                  lineStyle: {
-                    width: 1
-                  }
-                },
-                emphasis: {
-                  areaStyle: { color: "rgba(0,250,0,0.3)" }
-                }
-              },
-              data: [
-                {
-                  value: [
-                    (40 - i) * 10,
-                    (38 - i) * 4 + 60,
-                    i * 5 + 10,
-                    i * 9,
-                    (i * i) / 2
-                  ],
-                  name: i + 2000 + ""
-                }
-              ]
-            });
-          }
-          return series;
-        })()
-      });
+      // customer.setOption({
+      //   visualMap: {
+      //     top: "middle",
+      //     right: 10,
+      //     color: ["red", "yellow"]
+      //   },
+      //   radar: {
+      //     indicator: [
+      //       { text: "10-20", max: 400 },
+      //       { text: "20-30", max: 400 },
+      //       { text: "30-40", max: 400 },
+      //       { text: "40-50", max: 400 },
+      //       { text: "50以上", max: 400 }
+      //     ]
+      //   },
+      //   series: (function() {
+      //     var series = [];
+      //     for (var i = 1; i <= 28; i++) {
+      //       series.push({
+      //         type: "radar",
+      //         symbol: "none",
+      //         itemStyle: {
+      //           normal: {
+      //             lineStyle: {
+      //               width: 1
+      //             }
+      //           },
+      //           emphasis: {
+      //             areaStyle: { color: "rgba(0,250,0,0.3)" }
+      //           }
+      //         },
+      //         data: [
+      //           {
+      //             value: [
+      //               (40 - i) * 10,
+      //               (38 - i) * 4 + 60,
+      //               i * 5 + 10,
+      //               i * 9,
+      //               (i * i) / 2
+      //             ],
+      //             name: i + 2000 + ""
+      //           }
+      //         ]
+      //       });
+      //     }
+      //     return series;
+      //   })()
+      // });
 
       // 绘制图表
-      chartSale.setOption({
-        color: ["#3398DB"],
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            // 坐标轴指示器，坐标轴触发有效
-            type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
-          }
-        },
-        grid: {
-          left: "1%",
-          right: "5%",
-          bottom: "20%",
-          containLabel: true
-        },
-        xAxis: [
-          {
-            type: "category",
-            data: [
-              "1月",
-              "2月",
-              "3月",
-              "4月",
-              "5月",
-              "6月",
-              "7月",
-              "8月",
-              "9月",
-              "10月",
-              "11月",
-              "12月"
-            ],
-            axisTick: {
-              alignWithLabel: true
-            }
-          }
-        ],
-        yAxis: [
-          {
-            type: "value"
-          }
-        ],
-        series: [
-          {
-            name: "直接访问",
-            type: "bar",
-            barWidth: "30%",
-            data: [
-              1000,
-              5200,
-              20000,
-              33400,
-              39000,
-              33000,
-              22000,
-              3000,
-              10000,
-              2000,
-              10000,
-              30000
-            ]
-          }
-        ]
-      });
+      // chartSale.setOption({
+      //   color: ["#3398DB"],
+      //   tooltip: {
+      //     trigger: "axis",
+      //     axisPointer: {
+      //       // 坐标轴指示器，坐标轴触发有效
+      //       type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+      //     }
+      //   },
+      //   grid: {
+      //     left: "1%",
+      //     right: "5%",
+      //     bottom: "20%",
+      //     containLabel: true
+      //   },
+      //   xAxis: [
+      //     {
+      //       type: "category",
+      //       data: [
+      //         "1月",
+      //         "2月",
+      //         "3月",
+      //         "4月",
+      //         "5月",
+      //         "6月",
+      //         "7月",
+      //         "8月",
+      //         "9月",
+      //         "10月",
+      //         "11月",
+      //         "12月"
+      //       ],
+      //       axisTick: {
+      //         alignWithLabel: true
+      //       }
+      //     }
+      //   ],
+      //   yAxis: [
+      //     {
+      //       type: "value"
+      //     }
+      //   ],
+      //   series: [
+      //     {
+      //       name: "直接访问",
+      //       type: "bar",
+      //       barWidth: "30%",
+      //       data: [
+      //         1000,
+      //         5200,
+      //         20000,
+      //         33400,
+      //         39000,
+      //         33000,
+      //         22000,
+      //         3000,
+      //         10000,
+      //         2000,
+      //         10000,
+      //         30000
+      //       ]
+      //     }
+      //   ]
+      // });
     },
     ...mapActions('user', ['GET_USER_INFO'])
   },
+  watch: {
+    shopDada() {
+      this.drawLine()
+    }
+  },
   mounted() {
+    if (this.userInfo.userType === 1) {
+      axios.get('be/api/order/list').then(
+        data => {
+          this.allOrder = data.data.data.orderList
+        }
+      )
+    }
     this.drawLine()
   }
 };
