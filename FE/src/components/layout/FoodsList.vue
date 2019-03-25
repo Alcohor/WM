@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul class="foods-list" v-if="info.length">
-      <foods-item :shop-id="shopId" v-for="item in info" :key="item.id" :info="item">{{item}}</foods-item>
+      <foods-item :shop-id="shopId" v-for="item in info" :shop-name="shopName" :key="item.id" :info="item">{{item}}</foods-item>
     </ul>
     <div v-else>
       <p>这家店还没有餐食，去别家看看吧！</p>
@@ -14,9 +14,14 @@ import FoodsItem from "@c/common/FoodsItem";
 import axios from 'axios'
 export default {
   name: "foods-list",
+  computed: {
+    shopName() {
+      return this.$route.query.shopName
+    }
+  },
   data(){
       return {
-          info: []
+          info: [],
       }
   },
   methods: {

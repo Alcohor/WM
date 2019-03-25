@@ -28,7 +28,7 @@
     </div>
     <div class="rest-content">
       <router-link
-        :to="{name:'foods-list',query:{shopId}}"
+        :to="{name:'foods-list',query:{shopId, shopName: results.shopName}}"
         tag="div"
         class="rest-menu-btn"
       >点餐</router-link>

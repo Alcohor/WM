@@ -80,16 +80,20 @@ export default {
         let list = this.orders.list
         let status = 0
         let shopId = this.orders.shopId
+        let shopName = this.orders.shopName
+
         axios.post('be/api/order/create', {
             createTime,
             guestId,
             sum,
             list,
             status,
-            shopId
+            shopId,
+            shopName
         }).then(
             data => {
                 if(data.data.code===200){
+                    this.dialogVisible = false;
                     Toast('购买成功')
                     this.$store.commit('cart/UPDATE_CAR_GOODS', null)
                 }

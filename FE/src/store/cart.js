@@ -45,7 +45,7 @@ export default {
                 return;
             }
             let {orders} = state
-            let { id, name, price, num = 1, shopId } = payload
+            let { id, name, price, num = 1, shopId, shopName } = payload
             // order不为空对象
             if (Object.keys(orders).length > 0 && orders.shopId === shopId) {
                 let good = _.find(orders.list, item => item.id === id)
@@ -66,6 +66,7 @@ export default {
             } else {
                 orders = { 
                     shopId,
+                    shopName,
                     list:[{id, name, price, num}]
                 }
             }

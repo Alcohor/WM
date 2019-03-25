@@ -1,13 +1,14 @@
 <template>
     <div class="order-item">
-        <div class="order-img">
+        <!-- <div class="order-img">
             <img src="http://p0.meituan.net/128.180/movie/363e3a7e614d29b2847ff4e62afcd3f42168651.jpg" alt="">
-        </div>
+        </div> -->
         <div class="order-info">
             <div class="order-main-title">
-                <a href="" class="order-rest"> <div class="rest-name">大西北面食城<i class="fa fa-angle-right"></i></div> 
+                <a href="" class="order-rest"> <div class="rest-name">{{data.shopName}}<i class="fa fa-angle-right"></i></div> 
                 </a>
-                <span class="order-status">{{data.status===0 ? '已付款' : '已完成'}}</span>
+                <span class="order-status" v-if="data.status===0||data.status===1">{{data.status===0 ? '已付款' : '已发货'}}</span>
+                <span class="order-status" v-else>已完成</span>
             </div>
             <span class="order-create-time">{{time}}</span>
             <div class="goods-info">

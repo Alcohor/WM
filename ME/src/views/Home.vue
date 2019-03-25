@@ -137,10 +137,10 @@ export default {
       let info = {}
       let arr = []
       this.allOrder.forEach(order => {
-        if (info[order.shopId]) {
-          info[order.shopId] += order.sum
+        if (info[order.shopName]) {
+          info[order.shopName] += order.sum
         } else {
-          info[order.shopId] = order.sum
+          info[order.shopName] = order.sum
         }
       })
       for (let key in info) {

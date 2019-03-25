@@ -16,7 +16,7 @@
 import { mapMutations, mapGetters } from 'vuex'
 import { MessageBox } from 'mint-ui';
     export default{
-        props:['info', 'shopId'],
+        props:['info', 'shopId', 'shopName'],
         data(){
             return{
                 num:0,
@@ -26,7 +26,11 @@ import { MessageBox } from 'mint-ui';
             console.log(this.num,111)
         },
         computed:{
-            ...mapGetters('cart', ['orders'])
+            ...mapGetters('cart', ['orders']),
+            shopName() {
+                return this.$route.query.shopName
+            }
+
         },
         methods:{
             ...mapMutations('cart', ['UPDATE_CAR_GOODS']),
@@ -39,16 +43,18 @@ import { MessageBox } from 'mint-ui';
                             name,
                             price,
                             num:this.num,
-                            shopId: this.shopId
+                            shopId: this.shopId,
+                            shopName: this.shopName
                         })
                     }).catch();
                 }else{
-                    this.UPDATE_CAR_GOODS({
+                    this.UPDATE_CAR_GOODS({ 
                             id,
                             name,
                             price,
                             num:this.num,
-                            shopId: this.shopId
+                            shopId: this.shopId,
+                            shopName: this.shopName
                         })
                 }
             }

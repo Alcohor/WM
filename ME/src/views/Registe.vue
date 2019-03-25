@@ -26,7 +26,8 @@
             <el-option label="店铺管理员" :value="2"></el-option>
           </el-select>
         </el-form-item> -->
-        <el-checkbox v-model="checked" class="remember">记住密码</el-checkbox>
+        <Check @success="isChecked = true"></Check>
+        <el-checkbox v-model="checked" class="remember" style="width:100%;margin-top:10px;" >记住密码</el-checkbox>
         <el-form-item style="width:100%;margin-top:10px;">
             <el-button type="primary" style="width:100%;" @click.native.prevent="handleRegiste" :loading="registeing">注册</el-button>
         </el-form-item>
@@ -37,10 +38,15 @@
 <script>
 // import {requestregiste, registe} from '../service/api';
 import axios from 'axios'
+import Check from './components/Check'
 export default {
   name: 'registe',
+  components: {
+    Check
+  },
   data () {
     return {
+      isChecked: false,
       registeing: false,
       registeForm: {
         nickName: '',
@@ -88,6 +94,10 @@ export default {
     handleRegiste (ev) {
           if(this.registeForm.nickName === ''|| this.registeForm.userName === ''|| this.registeForm.passWord=== '' || this.registeForm === null){
             this.$message.error('请输入必填项');
+            return false;
+          }
+          if(!this.isChecked) {
+            this.$message.error('请拖动滑动验证！');
             return false;
           }
           axios.post('/be/api/admin/registe', {

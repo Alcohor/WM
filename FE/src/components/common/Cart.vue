@@ -26,6 +26,9 @@ export default {
     },
     computed:{
         ...mapGetters('cart',['allInfo','orders']),
+        shopName() {
+            return this.$route.query.shopName
+        },
         list(){
             let list = []
             if (Object.keys(this.orders).length>0) {
