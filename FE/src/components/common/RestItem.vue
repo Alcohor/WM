@@ -22,7 +22,7 @@ export default {
     goToDetail() {
       //   this.$router.push({ name: 'detail', params: { id: this.info.id } })
       this.$router.push({
-        name: "detail",
+        name: "rest-introduce",
         params: { shopId: this.info._id },
         query: { name: this.info.name }
       });

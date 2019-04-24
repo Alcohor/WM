@@ -20,12 +20,14 @@
 import { mapGetters } from 'vuex'
 import { mapState } from 'vuex'
 import CartList from '@c/layout/CartList'
+import { Toast } from 'mint-ui'
 export default {
     components:{
          CartList
     },
     computed:{
         ...mapGetters('cart',['allInfo','orders']),
+        ...mapGetters('user', ['userInfo']),
         shopName() {
             return this.$route.query.shopName
         },
@@ -52,6 +54,10 @@ export default {
            
         },
         toCartPage(){
+            if(!this.userInfo._id) {
+                Toast('请先登录');
+                return
+            }
             this.$router.push({name: 'cart'})
         },
         handlerCartStyle(){

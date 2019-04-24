@@ -24,7 +24,6 @@
                 <el-col :span="12" style="text-align:right;"><UserInfo></UserInfo></el-col>
             </el-header>
             <!--BODY-->
-            {{orderCount}}
             <el-main :class="collapsed?'main-mini':''">
                 <el-col :span="24" style="background-color:#fff;height:71px;;">
                     <!--面包屑-->

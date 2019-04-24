@@ -16,7 +16,7 @@
 import { mapMutations, mapGetters } from 'vuex'
 import { MessageBox } from 'mint-ui';
     export default{
-        props:['info', 'shopId', 'shopName'],
+        props:['info', 'shopId'],
         data(){
             return{
                 num:0,

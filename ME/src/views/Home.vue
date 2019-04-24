@@ -1,28 +1,29 @@
 <template>
   <section>
     <el-row :gutter="20" style="padding:10px;">
-      <el-col :span="12">
+      <el-col :span="24">
         <el-card style="height:230px;">
           <div>
             <span>总销售额</span>
           </div>
           <br>
           <div>
-            <span style="font-family:Arial;font-size:30px;">￥{{allSum.toFixed(2)}}</span>
-            <span style="font-family:PingFang SC;font-size:14px;">总订单量：{{allOrder.length}}笔</span>
+            <span style="font-family:Arial;font-size:50px;">￥{{allSum.toFixed(2)}}</span>
+            <br>
+            <span style="font-family:PingFang SC;font-size:30px;">总订单量：{{allOrder.length}}笔</span>
           </div>
         </el-card>
       </el-col>
-      <el-col :span="12">
-        <el-card style="height:230px;">
+      <el-col :span="24">
+        <el-card style="height:530px;">
           <div style="height:10px;">
             <span>销售来源</span>
           </div>
-          <div id="sitein" style="height:200px;"></div>
+          <div id="sitein" style="height:400px;"></div>
         </el-card>
       </el-col>
-      <el-col :span="12">
-        <el-card style="height:230px;">
+      <el-col :span="24">
+        <el-card style="height:230px;" v-show="false">
           <div>
             <span>访问量</span>
           </div>
@@ -30,7 +31,7 @@
         </el-card>
       </el-col>
       <el-col :span="6">
-        <el-card style="height:230px;">
+        <el-card style="height:230px;" v-show="false">
           <div>
             <span>客户占比</span>
           </div>
@@ -39,12 +40,12 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="20" style="padding:10px;">
+    <!-- <el-row :gutter="20" style="padding:10px;">
       <el-col :span="24">
         <el-card class="box-card" style="height:500px;">
           <el-tabs v-model="activeName">
-            <el-tab-pane label="销售额" name="first">
-              <div>
+            <el-tab-pane label="销售额" name="first"> -->
+              <!-- <div>
                 <el-col :span="19" id="chartSale" style="height:500px;"></el-col>
                 <el-col :span="5">
                   <el-table :data="dataTable" style="width: 100%">
@@ -52,19 +53,19 @@
                     <el-table-column prop="money" label="成交额" sortable width="100"></el-table-column>
                   </el-table>
                 </el-col>
-              </div>
-            </el-tab-pane>
-            <el-tab-pane label="访问量" name="last">访问量</el-tab-pane>
-          </el-tabs>
+              </div> -->
+            <!-- </el-tab-pane> -->
+            <!-- <el-tab-pane label="访问量" name="last">访问量</el-tab-pane> -->
+          <!-- </el-tabs>
         </el-card>
       </el-col>
-    </el-row>
-
-    <el-row :gutter="20" style="padding:10px;">
+    </el-row> -->
+  
+    <!-- <el-row :gutter="20" style="padding:10px;">
       <el-col :span="12">
         <el-card class="box-card" style="height:400px;">
           <div slot="header" class="clearfix">
-            <span>总销售额</span>
+            <span>总销售额</span>{{userInfo}}
             <el-button style="float: right; padding: 3px 0" type="text">查看</el-button>
           </div>
           <div v-for="o in 4" :key="o" class="text item">{{'列表内容 ' + o }}</div>
@@ -79,7 +80,7 @@
           <div v-for="o in 4" :key="o" class="text item">{{'列表内容 ' + o }}</div>
         </el-card>
       </el-col>
-    </el-row>
+    </el-row> -->
   </section>
 </template>
 
@@ -125,6 +126,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters('shop', ['shopId']),
     ...mapGetters('user', ['userInfo']),
     allSum() {
       let allSum = 0
@@ -136,13 +138,25 @@ export default {
     shopDada() {
       let info = {}
       let arr = []
-      this.allOrder.forEach(order => {
-        if (info[order.shopName]) {
-          info[order.shopName] += order.sum
-        } else {
-          info[order.shopName] = order.sum
-        }
-      })
+      if(this.userInfo.userType===2) {
+        this.allOrder.forEach(order => {
+          order.list.forEach(food => {
+            if(info[food.name]) {
+              info[food.name] += food.price*food.num
+            }else {
+              info[food.name] = food.price*food.num
+            }
+          })
+        })
+      } else {
+        this.allOrder.forEach(order => {
+          if (info[order.shopName]) {
+            info[order.shopName] += order.sum
+          } else {
+            info[order.shopName] = order.sum
+          }
+        })
+      }
       for (let key in info) {
         arr.push({name: key, value: info[key].toFixed(2)})
       }
@@ -162,7 +176,7 @@ export default {
         series: [
           {
             type: "pie",
-            radius: "55%",
+            radius: "90%",
             data: this.shopDada
           }
         ]
@@ -363,6 +377,12 @@ export default {
   mounted() {
     if (this.userInfo.userType === 1) {
       axios.get('be/api/order/list').then(
+        data => {
+          this.allOrder = data.data.data.orderList
+        }
+      )
+    } else {
+      axios.get('be/api/order/list', {params: { shopId: this.shopId}}).then(
         data => {
           this.allOrder = data.data.data.orderList
         }

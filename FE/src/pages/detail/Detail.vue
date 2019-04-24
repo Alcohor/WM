@@ -27,13 +27,13 @@
       </div>
     </div>
     <div class="rest-content">
+      <router-link :to="{name:'rest-introduce', query:{shopId}}" tag="div" class="rest-menu-btn">商家</router-link>
       <router-link
         :to="{name:'foods-list',query:{shopId, shopName: results.shopName}}"
         tag="div"
         class="rest-menu-btn"
       >点餐</router-link>
-      <router-link :to="{name:'rest-introduce', query:{shopId}}" tag="div" class="rest-menu-btn">商家</router-link>
-      <router-link :to="{name:'comment-list', query:{shopId}}" tag="div" class="rest-menu-btn">评论</router-link>
+      <!-- <router-link :to="{name:'comment-list', query:{shopId}}" tag="div" class="rest-menu-btn">评论</router-link> -->
     </div>
     <keep-alive>
       <router-view :introduce="results.notice"></router-view>
