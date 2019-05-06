@@ -165,6 +165,7 @@
 
 <script>
 import axios from 'axios'
+import { mapActions } from 'vuex';
 export default {
   data() {
     return {
@@ -186,6 +187,7 @@ export default {
     };
   },
   methods: {
+     ...mapActions("shop", ['GET_SHOP_ID']),
       handleAvatarSuccess(res, file) {
         console.log(file.raw)
         this.shopInfo.pic = URL.createObjectURL(file.raw);
@@ -213,7 +215,11 @@ export default {
       modifyShop() {
         this.dialogVisible = false
         axios.post('/be/api/shop/update', this.shopInfo).then(
-          this.getShopInfo()
+          () => {
+            this.getShopInfo()
+            this.GET_SHOP_ID();
+          }
+          
         )
       },
       getShopInfo() {
@@ -229,6 +235,7 @@ export default {
     },
     created() {
       this.getShopInfo();
+      this.GET_SHOP_ID();
     },
 };
 </script>

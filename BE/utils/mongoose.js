@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/movies', {
+mongoose.connect('mongodb://localhost:27017/wmdb', {
   useNewUrlParser: true
 });
 //connect() 返回一个状态待定（pending）的连接， 接着我们加上成功提醒和失败警告

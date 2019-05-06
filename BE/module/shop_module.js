@@ -33,6 +33,15 @@ const list = (query) => {
       return false;
     });
 }
+const getShopName = (query) => {
+  return Shop.findById(query)
+    .then((results) => {
+      return results.shopName
+    })
+    .catch((err) => {
+      return false;
+    });
+}
 
 const shopInfo = (query) => {
   return Shop.find(query).then((results) => {
@@ -147,5 +156,6 @@ module.exports = {
   selectID,
   update,
   status,
-  editShop
+  editShop,
+  getShopName
 };

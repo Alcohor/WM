@@ -108,29 +108,34 @@ import axios from 'axios';
       this.setCollapsed(localStorage.getItem('collapsed')=="true");
       this.checkLogin()
       //系统加载显示延迟一秒
-      console.log(this.userInfo)
-      if(this.userInfo.userType === 1) {
-        Vue.prototype.$tId = setInterval(() => {
-          axios.get('/be/api/order/list', {
-            params: {
-              shopId: this.shopId
-            }
-          }).then(
-            data => {
-              if(data.data.code === 200){
-                let orders = data.data.data.orderList
-                this.$store.commit('order/SET_ORDER', orders)
-              }else{
-                this.isLogin=false;
+      if(this.userInfo){
+        if(this.userInfo.userType === 2) {
+          console.log(this.userInfo.userType,999)
+          Vue.prototype.$tId = setInterval(() => {
+            axios.get('/be/api/order/list', {
+              params: {
+                shopId: this.shopId
               }
-            }
-          )
-        }, 2000)
+            }).then(
+              data => {
+                if(data.data.code === 200){
+                  let orders = data.data.data.orderList
+                  this.$store.commit('order/SET_ORDER', orders)
+                }else{
+                  this.isLogin=false;
+                }
+              }
+            )
+          }, 2000)
+        }
       }
       setTimeout(() => {
         this.setSysLoading(false);
       }, 1000);
       
+    },
+    beforeUnMount(){
+      clearInterval(this.$tId);
     }
 	}
 </script>

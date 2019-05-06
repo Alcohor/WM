@@ -127,5 +127,5 @@ module.exports = {
     update,
     status,
     editShop,
-    orderShop
+    orderShop,
 }

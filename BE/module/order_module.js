@@ -47,11 +47,12 @@ const list = async(query)=>{
 
 
 let default_pic = '/uploads/posterPic/defaultPic.jpg'
-const save = (data,guest) => {
+const save = (data,guest, shopName) => {
     let _timestamp = Date.now()
     let moment = Moment(_timestamp)
     console.log(guest, 298)
     return new Oreders({
+        shopName,
         ...data,
         nickName: guest.nickName,
         adress: guest.adress,
