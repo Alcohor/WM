@@ -182,7 +182,8 @@ export default {
         endTime: '24:00',
         startCost: 0,
         deliveryCost: 0,
-        packageCost: 0
+        packageCost: 0,
+        status: true
       }
     };
   },

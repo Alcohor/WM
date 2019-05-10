@@ -50,7 +50,9 @@ let vue = new Vue()
         async created(){
             axios.get('/be/api/shop/list').then(
               data => {
-                this.shopList = data.data.data
+                this.shopList = data.data.data.filter(item => {
+                    return item.status
+                })
                 console.log(this.shopList, 2384)
                 }
             )

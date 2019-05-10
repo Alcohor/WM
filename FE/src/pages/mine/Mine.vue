@@ -16,9 +16,9 @@
           class="nickname"
           v-else
         >{{userInfo._id ? userInfo._id.slice(0,10) : '请登录'}}</span>
-        <span class="tel-num">
+        <!-- <span class="tel-num">
           <i class="fa fa-mobile"></i> 131****2561
-        </span>
+        </span> -->
       </div>
       <i class="fa fa-angle-right"></i>
     </div>
